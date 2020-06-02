@@ -14,9 +14,9 @@ struct win_point {
     char with;
 };
 
-bool final_win = false;
+bool turn_end = false;
 struct win_point win_point_start;
-struct win_point win_points[4];
+struct win_point win_points[REQUIRED_LINE_LEN];
 
 void make_correct_line() {
     for(int i=0; i<TABLE_X*2-1; i++) { printf("-"); }
@@ -83,6 +83,19 @@ void make_final_points() {
     }
 }
 
+bool not_in_finals(int x, int y) {
+    bool result = true;
+
+    for(int i=0; i<REQUIRED_LINE_LEN; i++) {
+        if(win_points[i].x == x && win_points[i].y == y) {
+            result = false;
+            break;
+        }
+    }
+
+    return result;
+}
+
 void show_main_table() {
     printf("\n");
     show_options();
@@ -90,10 +103,14 @@ void show_main_table() {
 
     for(int i=0; i<TABLE_X; i++) {
         for(int j=0; j<TABLE_Y; j++) {
-            if(not_in_finals(i, y)) {
-                printf("%d", table[i][j]);
+            if(turn_end) {
+                if(not_in_finals(j, i)) {
+                    printf("%d", table[i][j]);
+                } else {
+                    printf("%c", win_point_start.with);
+                }
             } else {
-                printf("%c", win_point_start.with);
+                printf("%d", table[i][j]);
             }
 
             if(j+1 < TABLE_Y){ printf(" "); }
@@ -254,7 +271,9 @@ void game_loop() {
             }
 
             if(check_for_win(user_number+1)) {
+                turn_end = true;
                 make_final_points();
+                show_main_table();
                 printf("user %d won!\n", user_number + 1);
                 break;
             }
