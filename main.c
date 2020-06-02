@@ -4,6 +4,7 @@
 
 #define TABLE_X 8
 #define TABLE_Y 8
+#define REQUIRED_LINE_LEN 4
 
 int table[TABLE_X][TABLE_Y];
 
@@ -44,7 +45,6 @@ void show_main_table() {
     show_options();
 }
 
-
 void set_default_the_main_table() {
     for(int i=0; i<TABLE_X; i++) {
         for(int j=0; j<TABLE_Y; j++) {
@@ -73,6 +73,34 @@ char get_data_from_user() {
     free(user_input);
 
     return result;
+}
+
+bool check_for_win(int player_number) {
+    bool win = false;
+
+    for(int j=TABLE_Y - 1; j >= 0; j--) {
+        for(int i=0; i<TABLE_X; i++) {
+            // |
+            if(j-REQUIRED_LINE_LEN+1 >= 0){
+                for(int k=0; k<REQUIRED_LINE_LEN; k++){
+                    if(table[j-k][i] != player_number) {
+                        break;
+                    } else {
+                        if(k+1 >= REQUIRED_LINE_LEN) {
+                            win = true;
+                        }
+                    }
+                }
+            }
+
+            
+
+            if(win) { break; }
+        }
+        if(win) { break; }
+    }
+
+    return win;
 }
 
 bool change_table(int user_number, char user_choice) {
@@ -111,13 +139,19 @@ void game_loop() {
 
         printf("[user %d]: ", user_number + 1);
         user_choice = get_data_from_user();
-        if(!change_table(user_number, user_choice)){
-            last_fail = true;
+        if(!change_table(user_number, user_choice)) {
+            if(!last_fail) { last_fail = true; }
+
             user_number = 1 - user_number; // give an other try
             printf("[*] ERROR: incorrect char\n");
         } else {
             if(last_fail){
                 last_fail = false;
+            }
+
+            if(check_for_win(user_number+1)) {
+                printf("user %d won!\n", user_number + 1);
+                break;
             }
         }
     }
