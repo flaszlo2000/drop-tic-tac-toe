@@ -282,12 +282,40 @@ void game_loop() {
     }
 }
 
+void menu() {
+    int user_choice = 0;
+
+    // FIXME: i am lazy and exhaused yet, i know this is not the best way 
+    printf("Please select a game mode: \n");
+    printf("\t1)User vs User\n");
+    printf("\t2)User vs Computer\n");
+    printf("\t3)Computer vs Computer\n");
+    printf("\t4)N round competition\n");
+
+    while(true) {
+        printf("Chose: ");
+        scanf("%d", &user_choice);
+
+        switch(user_choice) {
+            case 4:
+                printf("ok");
+                break;
+            
+            default:
+                printf("Incorrect option!\n");
+        }
+    }
+}
+
 int main() {
     set_default_the_main_table();
-    if(REQUIRED_LINE_LEN < TABLE_X && REQUIRED_LINE_LEN < TABLE_Y) {
-        game_loop();
-    } else {
-        printf("[*] ERROR: this competition is not completable\n");
-    }
+
+    menu();
+
+    //if(REQUIRED_LINE_LEN < TABLE_X && REQUIRED_LINE_LEN < TABLE_Y) {
+    //    game_loop();
+    //} else {
+    //    printf("[*] ERROR: this competition is not completable\n");
+    //}
     return 0;
 }
