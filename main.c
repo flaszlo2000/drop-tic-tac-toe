@@ -8,6 +8,16 @@
 
 int table[TABLE_X][TABLE_Y];
 
+struct win_point {
+    int x;
+    int y;
+    char with;
+};
+
+bool final_win = false;
+struct win_point win_point_start;
+struct win_point win_points[4];
+
 void make_correct_line() {
     for(int i=0; i<TABLE_X*2-1; i++) { printf("-"); }
     printf("\n");
@@ -27,6 +37,52 @@ void show_options() {
     printf("\n");
 }
 
+void make_final_points() {
+    win_points[0] = win_point_start;
+    int point_index = 0;
+    int from;
+
+    switch(win_point_start.with) {
+        case '-':
+            from = win_point_start.x;
+            for(int i=from; i<from+REQUIRED_LINE_LEN; i++) {
+                win_points[point_index].x = i;
+                win_points[point_index].y = win_point_start.y;
+
+                point_index++;
+            }
+            break;
+
+        case '|':
+            from = win_point_start.y;
+            for(int i=from; i>from-REQUIRED_LINE_LEN; i--) {
+                win_points[point_index].x = win_point_start.x;
+                win_points[point_index].y = i;
+
+                point_index++;
+            }
+            break;
+
+        case '/':
+            for(int i=0; i<REQUIRED_LINE_LEN; i++) {
+                win_points[point_index].x = win_point_start.x + i;
+                win_points[point_index].y = win_point_start.y - i;
+
+                point_index++;
+            }
+            break;
+
+        case '\\':
+            for(int i=0; i<REQUIRED_LINE_LEN; i++) {
+                win_points[point_index].x = win_point_start.x - i;
+                win_points[point_index].y = win_point_start.y - i;
+
+                point_index++;
+            }
+            break;
+    }
+}
+
 void show_main_table() {
     printf("\n");
     show_options();
@@ -34,7 +90,11 @@ void show_main_table() {
 
     for(int i=0; i<TABLE_X; i++) {
         for(int j=0; j<TABLE_Y; j++) {
-            printf("%d", table[i][j]);
+            if(not_in_finals(i, y)) {
+                printf("%d", table[i][j]);
+            } else {
+                printf("%c", win_point_start.with);
+            }
 
             if(j+1 < TABLE_Y){ printf(" "); }
         }
@@ -87,6 +147,7 @@ bool check_for_win(int player_number) {
                         break;
                     } else {
                         if(k+1 >= REQUIRED_LINE_LEN) {
+                            win_point_start.with = '|';
                             win = true;
                         }
                     }
@@ -100,6 +161,7 @@ bool check_for_win(int player_number) {
                         break;
                     } else {
                         if(k+1 >= REQUIRED_LINE_LEN) {
+                            win_point_start.with = '-';
                             win = true;
                         }
                     }
@@ -113,13 +175,31 @@ bool check_for_win(int player_number) {
                         break;
                     } else {
                         if(k+1 >= REQUIRED_LINE_LEN) {
+                            win_point_start.with = '/';
                             win = true;
                         }
                     }
                 }
             }
 
-            if(win) { break; }
+            if(i-REQUIRED_LINE_LEN+1 >= 0 && j-REQUIRED_LINE_LEN+1 >= 0) {
+                for(int k=0; k<REQUIRED_LINE_LEN; k++) {
+                    if(table[j-k][i-k] != player_number) {
+                        break;
+                    } else {
+                        if(k+1 >= REQUIRED_LINE_LEN) {
+                            win_point_start.with = '\\';
+                            win = true;
+                        }
+                    }
+                }
+            }
+
+            if(win) {
+                win_point_start.x = i;
+                win_point_start.y = j;
+                break;
+            }
         }
         if(win) { break; }
     }
@@ -174,7 +254,7 @@ void game_loop() {
             }
 
             if(check_for_win(user_number+1)) {
-                show_main_table(); // show the last state of the table
+                make_final_points();
                 printf("user %d won!\n", user_number + 1);
                 break;
             }
@@ -184,6 +264,10 @@ void game_loop() {
 
 int main() {
     set_default_the_main_table();
-    game_loop();
+    if(REQUIRED_LINE_LEN < TABLE_X && REQUIRED_LINE_LEN < TABLE_Y) {
+        game_loop();
+    } else {
+        printf("[*] ERROR: this competition is not completable\n");
+    }
     return 0;
 }
