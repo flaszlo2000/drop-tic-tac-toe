@@ -75,6 +75,17 @@ bool change_table(int user_number, char user_choice) {
     bool result = false;
 
     if(user_choice >= 97 && user_choice < 97 + TABLE_X) {
+        int column = (int)user_choice - 97;
+        printf("column: %d\n", column);
+        // bc the gravity works here as well
+        for(int i=TABLE_Y - 1; i >= 0; i--) {
+            if(table[i][column] == 0) {
+                table[i][column] = ++user_number; // at here, we can use this form
+                break;
+            }
+        }
+
+
         result = true;
     }
 
@@ -93,11 +104,12 @@ void game_loop() {
 
         if(!last_fail) { show_main_table(); }
 
-        printf("[user %d]: ", user_number);
+        printf("[user %d]: ", user_number + 1);
         user_choice = get_data_from_user();
         if(!change_table(user_number, user_choice)){
             last_fail = true;
             user_number = 1 - user_number; // give an other try
+            printf("[*] ERROR: incorrect char\n");
         } else {
             if(last_fail){
                 last_fail = false;
