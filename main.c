@@ -199,6 +199,7 @@ bool check_for_win(int player_number) {
                 }
             }
 
+            //  \e (here the e is an "escape char")
             if(i-REQUIRED_LINE_LEN+1 >= 0 && j-REQUIRED_LINE_LEN+1 >= 0) {
                 for(int k=0; k<REQUIRED_LINE_LEN; k++) {
                     if(table[j-k][i-k] != player_number) {
