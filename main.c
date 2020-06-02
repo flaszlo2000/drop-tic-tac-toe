@@ -15,9 +15,13 @@ void make_correct_line() {
 void show_options() {
     char column_i = 97; // a
     for(int i=0; i<TABLE_X; i++){
-        printf("%c", column_i + i);
+        if(table[0][i] == 0) {
+            printf("%c", column_i + i);
 
-        if(i+1 < TABLE_X){ printf(" "); }
+            if(i+1 < TABLE_X){ printf(" "); }
+        } else {
+            printf("  ");
+        }
     }
     printf("\n");
 }
@@ -76,17 +80,18 @@ bool change_table(int user_number, char user_choice) {
 
     if(user_choice >= 97 && user_choice < 97 + TABLE_X) {
         int column = (int)user_choice - 97;
-        printf("column: %d\n", column);
-        // bc the gravity works here as well
-        for(int i=TABLE_Y - 1; i >= 0; i--) {
-            if(table[i][column] == 0) {
-                table[i][column] = ++user_number; // at here, we can use this form
-                break;
+        
+        if(table[0][column] == 0) {
+            // bc the gravity works here as well
+            for(int i=TABLE_Y - 1; i >= 0; i--) {
+                if(table[i][column] == 0) {
+                    table[i][column] = ++user_number;
+                    break;
+                }
             }
+
+            result = true;
         }
-
-
-        result = true;
     }
 
     return result;
