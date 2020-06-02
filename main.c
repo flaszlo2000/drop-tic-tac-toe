@@ -15,7 +15,7 @@ void make_correct_line() {
 
 void show_options() {
     char column_i = 97; // a
-    for(int i=0; i<TABLE_X; i++){
+    for(int i=0; i<TABLE_X; i++) {
         if(table[0][i] == 0) {
             printf("%c", column_i + i);
 
@@ -81,8 +81,8 @@ bool check_for_win(int player_number) {
     for(int j=TABLE_Y - 1; j >= 0; j--) {
         for(int i=0; i<TABLE_X; i++) {
             // |
-            if(j-REQUIRED_LINE_LEN+1 >= 0){
-                for(int k=0; k<REQUIRED_LINE_LEN; k++){
+            if(j-REQUIRED_LINE_LEN+1 >= 0) {
+                for(int k=0; k<REQUIRED_LINE_LEN; k++) {
                     if(table[j-k][i] != player_number) {
                         break;
                     } else {
@@ -93,7 +93,31 @@ bool check_for_win(int player_number) {
                 }
             }
 
-            
+            // --
+            if(i+REQUIRED_LINE_LEN-1 < TABLE_X) {
+                for(int k=0; k<REQUIRED_LINE_LEN; k++) {
+                    if(table[j][i+k] != player_number) {
+                        break;
+                    } else {
+                        if(k+1 >= REQUIRED_LINE_LEN) {
+                            win = true;
+                        }
+                    }
+                }
+            }
+
+            // /
+            if(i+REQUIRED_LINE_LEN-1 < TABLE_X && j-REQUIRED_LINE_LEN+1 >= 0) {
+                for(int k=0; k<REQUIRED_LINE_LEN; k++) {
+                    if(table[j-k][i+k] != player_number) {
+                        break;
+                    } else {
+                        if(k+1 >= REQUIRED_LINE_LEN) {
+                            win = true;
+                        }
+                    }
+                }
+            }
 
             if(win) { break; }
         }
@@ -150,6 +174,7 @@ void game_loop() {
             }
 
             if(check_for_win(user_number+1)) {
+                show_main_table(); // show the last state of the table
                 printf("user %d won!\n", user_number + 1);
                 break;
             }
