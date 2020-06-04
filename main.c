@@ -1,10 +1,15 @@
 #include <stdio.h>
-#include <malloc.h>
+#include <stdlib.h>
 #include <stdbool.h>
 
 #define TABLE_X 8
 #define TABLE_Y 8
 #define REQUIRED_LINE_LEN 4
+
+typedef struct Dictionary {
+    char * function_name;
+    void (*func_ptr)(void);
+} dict;
 
 int table[TABLE_X][TABLE_Y];
 
@@ -96,8 +101,17 @@ bool not_in_finals(int x, int y) {
     return result;
 }
 
+void clear_by_os_type() {
+    #ifdef __linux__
+        system("clear");
+    #elif _WIN32
+        printf("win shell clear TODO\n");
+        printf("\n");
+    #endif
+}
+
 void show_main_table() {
-    printf("\n");
+    clear_by_os_type();
     show_options();
     make_correct_line();
 
@@ -282,38 +296,58 @@ void game_loop() {
     }
 }
 
-void menu() {
-    int user_choice = 0;
-
-    // FIXME: i am lazy and exhaused yet, i know this is not the best way 
-    printf("Please select a game mode: \n");
-    printf("\t1)User vs User\n");
-    printf("\t2)User vs Computer\n");
-    printf("\t3)Computer vs Computer\n");
-    printf("\t4)N round competition\n");
-
-    while(true) {
-        printf("Chose: ");
-        scanf("%d", &user_choice);
-
-        switch(user_choice) {
-            case 4:
-                printf("ok");
-                break;
-            
-            default:
-                printf("Incorrect option!\n");
-        }
+void print_normal_game_options(dict function_map[], int len) {
+    for(int i=0; i<len; i++) {
+        printf("\t%d) %s\n", i+1, function_map[i].function_name + '\0');
     }
+}
+
+void print_game_options(dict function_map[], int len) {
+    // this is a wrapper for normal game options
+    print_normal_game_options(function_map, len);
+    printf("\t%d) N round competition\n", len + 1);
+}
+
+void menu() {
+    dict function_map[] = {{"User vs User", &game_loop},
+                           {"User vs Computer", NULL},
+                           {"Computer vs Computer", NULL}};
+
+    int function_count = sizeof(function_map)/sizeof(dict);
+    int user_choice = 0;
+    char raw_data_from_user;
+
+    printf("Please select a game mode: \n");
+    print_game_options(function_map, function_count);
+    
+    while(true) {
+        printf("Choice: ");
+        raw_data_from_user = get_data_from_user();
+        if(raw_data_from_user >= 48 && raw_data_from_user <= 57) {
+            user_choice = (raw_data_from_user - '0') - 1; // set back the value in "index form"
+
+            if(user_choice >= 0 && user_choice <= function_count) {
+                if(user_choice == function_count) {
+                    printf("n round comp\n");
+                } else {
+                    function_map[user_choice].func_ptr();
+                    break;
+                }
+            } else {
+                printf("[*] ERROR: incorrect option!\n");
+            }
+        } else {
+            printf("[*] ERROR: this is not a number!\n");
+        }
+    }   
 }
 
 int main() {
     set_default_the_main_table();
-
     menu();
 
     //if(REQUIRED_LINE_LEN < TABLE_X && REQUIRED_LINE_LEN < TABLE_Y) {
-    //    game_loop();
+    //   game_loop();
     //} else {
     //    printf("[*] ERROR: this competition is not completable\n");
     //}
