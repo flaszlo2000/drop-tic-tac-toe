@@ -120,6 +120,16 @@ void clear_by_os_type() {
 
 void show_main_table() {
     clear_by_os_type();
+
+    if(n_round_count > 0) {
+        make_correct_line();
+        printf("This is an N round competition!\n");
+        printf("[user 1]: n ;; [user 2]: n\n");
+        make_correct_line();
+        printf("\n");
+    }
+
+
     show_options();
     make_correct_line();
 
@@ -168,9 +178,9 @@ int get_data_from_user(int amount, char * into) {
         }
     }
 
-    if(index_in_str == 0) { user_input[0] = '\n';}
+    if(index_in_str == 0) { user_input[0] = '\n';} // to give back the enter response
     for(int i=0; i < amount; i++) {
-        into[i] = user_input[i];
+        into[i] = user_input[i]; // FIXME: strcpy ?
     }
 
     free(user_input);
@@ -357,6 +367,8 @@ void menu() {
             returned_real_len = MAX_ROUND_CHAR_NUM; // avoid overindexing
         }
 
+        // TODO: handle 0 from the user
+
         if(n_round_count > 0) { // if n round competition have been choosen
             bool next_flag = false; // i would like to avoid goto uses, so i implement a flag
 
@@ -395,6 +407,8 @@ void menu() {
                 // TODO
             }
         }
+
+        // TODO: do something if the user in the next flag give a wrong param (use next flag f.e.)
 
         // *raw_data_from_user == raw_data_from_user[0]
         if(*raw_data_from_user >= 48 && *raw_data_from_user <= 57) { // if it is a number between 0-9
