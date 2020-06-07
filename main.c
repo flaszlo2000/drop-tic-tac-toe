@@ -152,7 +152,7 @@ void set_default_the_main_table() {
     }
 }
 
-void get_data_from_user(int amount, char * into) {
+int get_data_from_user(int amount, char * into) {
     // a safe way to get only one first char and dont get overflow
     unsigned int allocated_mul = 128;
     unsigned int index_in_str = 0;
@@ -174,6 +174,8 @@ void get_data_from_user(int amount, char * into) {
     }
 
     free(user_input);
+
+    return index_in_str;
 }
 
 char get_a_char_from_user() {
@@ -344,33 +346,55 @@ void menu() {
             printf("You have chosen the n round competition option!\n");
             printf("Would you like to keep the current preset option (%d), or would like to change it?\n", n_round_count);
             printf("(To keep the current press enter, to change give a number)\n");
+            printf("(Max length to the round: %d)\n", MAX_ROUND_CHAR_NUM);
+
+            printf("\n");
         }
 
         printf("Choice: ");
-        get_data_from_user(MAX_ROUND_CHAR_NUM, raw_data_from_user);
+        int returned_real_len = get_data_from_user(MAX_ROUND_CHAR_NUM, raw_data_from_user); // we let the user to give numbers in a range (MAX_ROUND_CHAR_NUM) and in that range we have to know how long is the real givel input
+        if(returned_real_len > MAX_ROUND_CHAR_NUM) {
+            returned_real_len = MAX_ROUND_CHAR_NUM; // avoid overindexing
+        }
 
         if(n_round_count > 0) { // if n round competition have been choosen
+            bool next_flag = false; // i would like to avoid goto uses, so i implement a flag
+
             if(*raw_data_from_user == 10) {
-                printf("You pressed enter\n");
+                //printf("You pressed enter\n");
+                next_flag = true;
             } else {
                 // if the first char is not \n then this means this must be a number!
                 bool input_is_correct = false;
                 char current_char;
-                for(int i=0; i<MAX_ROUND_CHAR_NUM; i++) {
+                for(int i=0; i<returned_real_len; i++) {
                     current_char = raw_data_from_user[i];
 
-                    if(current_char < 48 || current_char > 57) { break; }
+                    if(current_char < 48 || current_char > 57) { break; } // if the current digit is not a number
 
-                    if(i+1 >= MAX_ROUND_CHAR_NUM) { input_is_correct = true; }
+                    if(i+1 >= returned_real_len) { input_is_correct = true; }
                 }
 
                 if(input_is_correct) {
-                    printf("The input is a number!");
+                    n_round_count = atoi(raw_data_from_user);
+                    printf("New round count: %d\n", n_round_count);
+                    next_flag = true;
                 } else {
-                    printf("NaN\n");
+                    printf("[*] ERROR: NaN\n");
                 }
             }
-        break;
+
+            if(next_flag) {
+                printf("\nPlease select a game mode for n round competition: \n");
+                print_normal_game_options(function_map, function_count);
+                printf("Choice: ");
+                *raw_data_from_user = get_a_char_from_user();
+
+                printf("%c\n", raw_data_from_user);
+            } else {
+                // TODO
+            }
+            break;
         }
 
         // *raw_data_from_user == raw_data_from_user[0]
