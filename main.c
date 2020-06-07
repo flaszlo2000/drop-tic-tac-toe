@@ -386,15 +386,14 @@ void menu() {
 
             if(next_flag) {
                 printf("\nPlease select a game mode for n round competition: \n");
-                print_normal_game_options(function_map, function_count);
+                print_normal_game_options(function_map, function_count); // use the normal function instead of the wrapper to make the output nicer
                 printf("Choice: ");
                 *raw_data_from_user = get_a_char_from_user();
 
-                printf("%c\n", raw_data_from_user);
+                printf("user choice: %c\n", *raw_data_from_user);
             } else {
                 // TODO
             }
-            break;
         }
 
         // *raw_data_from_user == raw_data_from_user[0]
