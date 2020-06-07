@@ -123,8 +123,10 @@ void show_main_table() {
 
     if(n_round_count > 0) {
         make_correct_line();
+
         printf("This is an N round competition!\n");
         printf("[user 1]: n ;; [user 2]: n\n");
+
         make_correct_line();
         printf("\n");
     }
@@ -404,7 +406,8 @@ void menu() {
 
                 printf("user choice: %c\n", *raw_data_from_user);
             } else {
-                // TODO
+                // TODO: what if an error occured?
+                // we should wait and continue
             }
         }
 
