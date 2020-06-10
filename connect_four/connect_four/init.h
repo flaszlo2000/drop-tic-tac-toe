@@ -10,21 +10,31 @@
 
 
 
-typedef struct torna
+typedef struct torna_data
 {
 	unsigned char nRounds;
 	unsigned char nP1_wins;
 	unsigned char nP2_wins;
-} torna;
+} torna_data;
 
 
 
-typedef struct data
+typedef struct map_data
+{
+	unsigned char x;
+	unsigned char y;
+	unsigned char** pMap;
+} map_data;
+
+
+
+typedef struct game_data
 {
 	unsigned char nPlayers;
-	struct torna* torna;
-} data;
+	map_data map;
+	torna_data* torna;
+} game_data;
 
 
 
-void init(struct data* game_data);
+void init(game_data* game_data);
