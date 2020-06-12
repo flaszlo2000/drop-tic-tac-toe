@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="data.h" />
     <ClInclude Include="init.h" />
   </ItemGroup>
   <ItemGroup>
