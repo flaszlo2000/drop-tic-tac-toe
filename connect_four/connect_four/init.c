@@ -1,5 +1,5 @@
 /**
-	Implementation of the init module.
+Implementation of the init module.
 */
 
 #define _CRT_SECURE_NO_WARNINGS //this is for msvc
