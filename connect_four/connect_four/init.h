@@ -8,6 +8,4 @@
 	It reads information such as the number of players and whether the game is played in tournament mode.
 */
 
-
-
 void init(game_data* game_data);

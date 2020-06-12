@@ -1,11 +1,13 @@
 /**
+	@author Levente Löffler
+	@version 1.0.3 6/12/2020
+
 	Implementation of the init module.
 */
 
 #define _CRT_SECURE_NO_WARNINGS //this is for msvc
 #include "init.h";
 #include <stdio.h>
-#include <malloc.h>
 
 
 
@@ -43,28 +45,17 @@ void init(game_data* data)
 			data->map.pMap[c][d] = '0';
 	}
 
-	printf("If you would like to play a tournament, enter the number of rounds (0, if no tournament): ");
+	printf("Please enter the number of won rounds needed to win the whole game (1-255): ");
 	while (1)
 	{
-		unsigned char torna;
-		scanf("%hhu", &torna);
+		scanf("%hhu", &data->nWins);
 
-		if (torna < 0)
-		{
-			printf("The number of rounds cannot be negative! Please retry: ");
-			continue;
-		}
+		if (data->nWins >= 1)
+			break;
 
-		if (!torna)
-			data->torna = NULL;
-		else
-		{
-			data->torna = malloc(sizeof(torna_data)); //this also needs to be freed later
-			data->torna->nRounds = torna;
-			data->torna->nP1_wins = 0;
-			data->torna->nP2_wins = 0;
-		}
-
-		break;
+		printf("The number of won rounds must be positive! Please retry: ");
 	}
+	
+	data->nP1_wins = 0;
+	data->nP2_wins = 0;
 }
