@@ -1,16 +1,16 @@
 /**
 	@author Tamara Süli
-	@version 1.0.0 6/12/2020
+	@version 1.0.1 6/12/2020
 
 	
 */
 
-void aiTurn(game_data* data, char* sx, char* sy, short* r);
+void aiTurn(game_data* data, char* s);
 
-void playerTurn(game_data* data, char* sx, char* sy, short* r);
+void playerTurn(game_data* data, char* s);
 
-int check(game_data* data, char* x, char* y);
+int check(game_data* data, char* s);
 
-void stepInput(game_data* data, char* sx, char* sy, short* r);
+void stepInput(game_data* data, char* s, short* r);
 
-void stepPerform(game_data* data, char* sx, char* sy);
+void stepPerform(game_data* data, char* s, short* r);

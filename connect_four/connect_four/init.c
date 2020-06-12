@@ -3,7 +3,7 @@ Implementation of the init module.
 */
 
 #define _CRT_SECURE_NO_WARNINGS //this is for msvc
-#include "init.h";
+#include "init.h"
 #include <stdio.h>
 #include <malloc.h>
 
