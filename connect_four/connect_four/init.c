@@ -6,8 +6,9 @@
 */
 
 #define _CRT_SECURE_NO_WARNINGS //this is for msvc
-#include "init.h";
+#include "init.h"
 #include <stdio.h>
+#include <malloc.h>
 
 
 
@@ -35,11 +36,11 @@ void init(game_data* data)
 		printf("Both dimensions must be greater than 0! Please retry: ");
 	}
 
-	data->map.pMap = malloc(data->map.x); //this needs to be freed later
+	data->map.pMap = malloc(data->map.x * sizeof(unsigned char*)); //this needs to be freed later
 
 	for (unsigned char c = 0; c < data->map.x; c++)
 	{
-		data->map.pMap[c] = malloc(data->map.y); //these also need to be freed later
+		data->map.pMap[c] = malloc(data->map.y * sizeof(unsigned char)); //these also need to be freed later
 
 		for (unsigned char d = 0; d < data->map.y; d++)
 			data->map.pMap[c][d] = '0';
