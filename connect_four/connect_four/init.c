@@ -18,7 +18,7 @@ void init(game_data* data)
 
 		if (data->nPlayers == 0 || data->nPlayers == 1 || data->nPlayers == 2)
 			break;
-		
+
 		printf("The number of players must be 0, 1, or 2! Please retry: ");
 	}
 
