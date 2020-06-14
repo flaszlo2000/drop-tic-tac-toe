@@ -1,6 +1,8 @@
 /**
 	@author Levente Löffler
 	@version 1.0.0 6/14/2020
+
+	This module provides function to iterate over the map and check for wins and draws.
 */
 
 #pragma once
