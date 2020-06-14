@@ -1,4 +1,3 @@
-#pragma once
 /**
 	@author Levente Löffler
 	@version 1.0.1 6/12/2020
@@ -6,7 +5,7 @@
 	This header declares the necessary data structures used by other modules.
 */
 
-
+#pragma once
 
 typedef struct map_data
 {
