@@ -7,4 +7,5 @@
 #include "data.h"
 #include <stdbool.h>
 
-bool check_win(map_data* map);
+bool check_draw(map_data* sMap);
+bool check_win(map_data* sGame, char nRound);

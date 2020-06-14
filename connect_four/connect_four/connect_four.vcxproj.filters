@@ -24,7 +24,7 @@
     <ClInclude Include="display.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="wincheck.h">
+    <ClInclude Include="map_check.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -35,10 +35,10 @@
     <ClCompile Include="display.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="wincheck.c">
+    <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.c">
+    <ClCompile Include="map_check.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
