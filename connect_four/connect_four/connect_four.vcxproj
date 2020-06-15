@@ -140,12 +140,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="data.h" />
+    <ClInclude Include="display.h" />
     <ClInclude Include="init.h" />
-    <ClInclude Include="step.h" />
+    <ClInclude Include="map_check.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="display.c" />
     <ClCompile Include="init.c" />
-    <ClCompile Include="step.c" />
+    <ClCompile Include="main.c" />
+    <ClCompile Include="map_check.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

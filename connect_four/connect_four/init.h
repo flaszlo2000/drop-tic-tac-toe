@@ -1,5 +1,3 @@
-#pragma once
-#include "data.h"
 /**
 	@author Levente Löffler
 	@version 1.0.4 6/12/2020
@@ -8,6 +6,7 @@
 	It reads information such as the number of players and whether the game is played in tournament mode.
 */
 
-
+#pragma once
+#include "data.h"
 
 void init(game_data* game_data);
