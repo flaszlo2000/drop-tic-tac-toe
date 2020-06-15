@@ -35,10 +35,10 @@
     <ClCompile Include="display.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="main.c">
+    <ClCompile Include="map_check.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="map_check.c">
+    <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

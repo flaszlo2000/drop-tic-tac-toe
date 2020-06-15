@@ -18,12 +18,12 @@ bool check_draw(map_data* sMap)
 	return true;
 }
 
-bool check_win(map_data* sMap, char nRound)
+bool check_win(map_data* sMap, char nTurn)
 {
 	bool ret = false;
 	for (char c = 0; c < sMap->x; c++)
 		for (char d = 0; d < sMap->y; d++)
-			if (sMap->pMap[c][d] == (nRound % 2 ? '1' : '0'))
+			if (sMap->pMap[c][d] == (nTurn % 2 ? '1' : '0'))
 			{
 				if (d + 3 < sMap->y)
 					if (sMap->pMap[c][d + 1] == sMap->pMap[c][d] && sMap->pMap[c][d + 2] == sMap->pMap[c][d] && sMap->pMap[c][d + 3] == sMap->pMap[c][d])
