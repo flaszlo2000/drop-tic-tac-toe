@@ -6,13 +6,12 @@ Implementation of the turn module.
 #include "turn.h"
 #include <stdio.h>
 
-void ai_turn(game_data* data, int* step, char* round) {}
+void ai_turn(game_data* data, int* step, unsigned char round) {}
 
-void player_turn(game_data* data, int* step, char* round) {
+void player_turn(game_data* data, int* step, unsigned char round) {
 
-	printf("This is the %hhu. turn.\n", *round);
-	printf(*round % 2 ? "1. player" : "2. player");
-	printf(", please enter your step!");
+	printf("This is the %hhu. turn.\n", round);
+	printf("Player %c, make your move: ", round % 2 ? '1' : '2');
 	scanf("%d", step);
 }
 
@@ -23,7 +22,7 @@ int check_step(game_data* data, int* step) {
 		return 1;
 }
 
-void step_input(game_data* data, int* step, char* round) {
+void step_input(game_data* data, int* step, unsigned char round) {
 	while (1) {
 		switch (data->nPlayers) {
 		case 0:
@@ -31,7 +30,7 @@ void step_input(game_data* data, int* step, char* round) {
 			break;
 
 		case 1:
-			if (*round % 2 == 1)
+			if (round % 2 == 1)
 				player_turn(data, step, round);
 			else
 				ai_turn(data, step, round);
@@ -46,12 +45,12 @@ void step_input(game_data* data, int* step, char* round) {
 			break;
 		}
 		else
-			printf("This step is not possible! Please retry: ");
+			printf("Illegal move. Please retry: ");
 	}
 }
 
-void step_perform(game_data* data, int* step, char* round) {
-	unsigned char ch = *round % 2 ? '1' : '2';
+void step_perform(game_data* data, int* step, unsigned char round) {
+	unsigned char ch = round % 2 ? '1' : '2';
 
 	for (int i = data->map.x - 1; i >= 0; i--) {
 		if (data->map.pMap[i][*step - 1] == '0') {
@@ -61,7 +60,7 @@ void step_perform(game_data* data, int* step, char* round) {
 	}
 }
 
-void turn(game_data* data, char* round) {
+void turn(game_data* data, unsigned char round) {
 	int step;
 
 	step_input(data, &step, round);

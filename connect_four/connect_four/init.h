@@ -1,12 +1,13 @@
 /**
 	@author Levente Löffler
-	@version 1.0.4 6/12/2020
+	@version 1.1.0 6/15/2020
 
-	This module is responsible for the initialization of the data structure of a match.
-	It reads information such as the number of players and whether the game is played in tournament mode.
+	This module handles the data structure initializations and uninitializations.
 */
 
 #pragma once
 #include "data.h"
 
-void init(game_data* game_data);
+void init(game_data* game);
+void reset(map_data* map);
+void uninit(map_data* map);
