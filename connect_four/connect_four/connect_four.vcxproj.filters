@@ -27,6 +27,9 @@
     <ClInclude Include="map_check.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="turn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="init.c">
@@ -39,6 +42,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="turn.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

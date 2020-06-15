@@ -9,6 +9,7 @@
 #include "init.h"
 #include "display.h"
 #include "map_check.h"
+#include "turn.h"
 #include <stdio.h>
 
 
@@ -21,7 +22,7 @@ void game_loop(game_data* game)
 
 	while (true)
 	{
-		//placeholder for inputs and map alterations
+		turn(game, &nTurn);
 
 		if (check_win(&game->map, nTurn))
 		{
@@ -37,7 +38,9 @@ void game_loop(game_data* game)
 		{
 			printf("The round has come to a draw!\n");
 			return;
-		}	
+		}
+
+		nTurn++;
 	}
 }
 
