@@ -12,7 +12,7 @@ void aiTurn(game_data* data, char* s) {}
 void playerTurn(game_data* data, char* s) {
 
 	printf("Please enter your step!");
-	scanf("%d", s);
+	scanf("%hhu", s);
 }
 
 int check(game_data* data, char* s) {
@@ -22,7 +22,7 @@ int check(game_data* data, char* s) {
 		return 1;
 }
 
-void stepInput(game_data* data, char* s, short* r) {
+void stepInput(game_data* data, char* s, char* r) {
 	while (1) {
 		switch (data->nPlayers) {
 		case 0:
@@ -41,16 +41,26 @@ void stepInput(game_data* data, char* s, short* r) {
 			break;
 		}
 
-		if (check(data, s))
+		if (check(data, s)) {
+			*r += 1;
 			break;
-		else
+		} else
 			printf("This step is not possible! Please retry: ");
 	}
 }
 
-void stepPerform(game_data* data, char* s, short* r){}
+void stepPerform(game_data* data, char* s, char* r){
+	char ch = (*r % 2 ? "X" : "O");
 
-void step(game_data* data, short* r) {
+	for (int i = data->map.x - 1; i >= 0; i--) {
+		if (data->map.pMap[i][*s] == 0) {
+			data->map.pMap[i][*s] = ch;
+			break;
+		}
+	}
+}
+
+void step(game_data* data, char* r) {
 	char step;
 	
 	stepInput(data, &step, r);
