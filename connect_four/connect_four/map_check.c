@@ -53,6 +53,8 @@ bool check_win(map_data* sMap, char nRound)
 							sMap->pMap[e][f] = '/';
 						ret = true;
 					}
+				if (ret)
+					break;
 			}
 	return ret;
 }
