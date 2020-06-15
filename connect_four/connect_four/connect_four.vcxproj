@@ -139,10 +139,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="data.h" />
+    <ClInclude Include="display.h" />
     <ClInclude Include="init.h" />
+    <ClInclude Include="map_check.h" />
+    <ClInclude Include="turn.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="display.c" />
     <ClCompile Include="init.c" />
+    <ClCompile Include="main.c" />
+    <ClCompile Include="map_check.c" />
+    <ClCompile Include="turn.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
