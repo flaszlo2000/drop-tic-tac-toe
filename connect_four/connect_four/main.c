@@ -55,7 +55,7 @@ int main()
 		while (game.nP1_wins < game.nWins && game.nP2_wins < game.nWins)
 			game_loop(&game);
 
-		printf((game.nP1_wins == game.nP2_wins ? "The match has come to a draw.\n" : "Victory! Player %d has won the match!\n!", (game.nP1_wins < game.nP2_wins ? '2' : '1')));
+		printf(game.nP1_wins == game.nP2_wins ? "The match has come to a draw.\n" : "Victory! Player %d has won the match!\n!", game.nP1_wins < game.nP2_wins ? '2' : '1');
 
 		printf("Would you like to play again? y/n: ");
 		char input;
