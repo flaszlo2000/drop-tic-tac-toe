@@ -1,6 +1,6 @@
 /**
 	@author Levente Löffler
-	@version 1.2.0 6/16/2020
+	@version 1.2.5 6/16/2020
 
 	Implementation of the init module.
 */
@@ -17,7 +17,12 @@ void init(game_data* data)
 	printf("Please enter the number of players (0,1,2): ");
 	while (1)
 	{
-		scanf("%hhu", &data->nPlayers);
+		if (scanf("\n%hhu", &data->nPlayers) == 0)
+		{
+			printf("Not a number. Please retry: ");
+			while (getchar() != '\n');
+			continue;
+		}
 
 		if (data->nPlayers == 0 || data->nPlayers == 1 || data->nPlayers == 2)
 			break;
@@ -28,7 +33,12 @@ void init(game_data* data)
 	printf("Please enter the dimensions of the map (rows-columns, 2-26): ");
 	while (1)
 	{
-		scanf("%hhu%hhu", &data->map.x, &data->map.y);
+		if (scanf("%hhu%hhu", &data->map.x, &data->map.y) == 0)
+		{
+			printf("Not numbers. Please retry: ");
+			while (getchar() != '\n');
+			continue;
+		}
 
 		if (data->map.x >= 2 && data->map.y >= 2 && data->map.x <= 26 && data->map.y <= 26)
 			break;
@@ -56,7 +66,12 @@ void init(game_data* data)
 	printf("Please enter the number of marks that have to be in a row in order to win: ");
 	while (1)
 	{
-		scanf("%hhu", &data->lLength);
+		if (scanf("%hhu", &data->lLength) == 0)
+		{
+			printf("Not a number. Please retry: ");
+			while (getchar() != '\n');
+			continue;
+		}
 
 		if ((data->lLength <= data->map.x || data->lLength <= data->map.y) && data->lLength > 1)
 			break;
@@ -73,7 +88,12 @@ void init(game_data* data)
 	printf("Please enter the number of won rounds needed to win the whole game (1-255): ");
 	while (1)
 	{
-		scanf("%hhu", &data->nWins);
+		if (scanf("%hhu", &data->nWins) == 0)
+		{
+			printf("Not a number. Please retry: ");
+			while (getchar() != '\n');
+			continue;
+		}
 
 		if (data->nWins >= 1)
 			break;
