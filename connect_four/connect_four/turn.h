@@ -9,9 +9,9 @@
 #pragma once
 #include "data.h"
 
-void ai_turn(game_data* data, char* step, unsigned char round);
+void ai_turn(game_data* data, char* step);
 
-void player_turn(char* step, unsigned char round);
+void player_turn(char* step);
 
 int check_step(map_data* map, char* step);
 
