@@ -1,6 +1,6 @@
 /**
 	@author Levente Löffler
-	@version 1.1.0 6/15/2020
+	@version 1.2.0 6/16/2020
 
 	Implementation of the init module.
 */
@@ -25,15 +25,22 @@ void init(game_data* data)
 		printf("The number of players must be 0, 1, or 2! Please retry: ");
 	}
 
-	printf("Please enter the dimensions of the map (rows-columns, 1-255): ");
+	printf("Please enter the dimensions of the map (rows-columns, 1-26): ");
 	while (1)
 	{
 		scanf("%hhu%hhu", &data->map.x, &data->map.y);
 
-		if (data->map.x != 0 && data->map.y != 0)
+		if (data->map.x != 0 && data->map.y != 0 && data->map.x <= 26 && data->map.y <= 26)
 			break;
 
-		printf("Both dimensions must be greater than 0! Please retry: ");
+		if (data->map.x == 0 || data->map.y == 0)
+		{
+			printf("Both dimensions must be greater than 0! Please retry: ");
+			continue;
+		}
+			
+		if (data->map.x > 26 || data->map.y > 26)
+			printf("Nether dimension can be greater than 26! Please retry: ");
 	}
 
 	data->map.pMap = malloc(data->map.x * sizeof(unsigned char*));
@@ -44,6 +51,17 @@ void init(game_data* data)
 
 		for (unsigned char d = 0; d < data->map.y; d++)
 			data->map.pMap[c][d] = '0';
+	}
+
+	printf("Please enter the number of marks that have to be in a row in order to win: ");
+	while (1)
+	{
+		scanf("%hhu", &data->lLength);
+
+		if (data->lLength <= data->map.x || data->lLength <= data->map.y)
+			break;
+
+		printf("This number must be lower than one of the dimensions! Please retry: ");
 	}
 
 	printf("Please enter the number of won rounds needed to win the whole game (1-255): ");

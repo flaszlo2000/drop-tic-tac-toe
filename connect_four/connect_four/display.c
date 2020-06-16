@@ -1,6 +1,6 @@
 /**
 	@author Levente Löffler
-	@version 1.0.0 6/12/2020
+	@version 1.0.5 6/16/2020
 
 	Implementation of the display module.
 */
@@ -10,9 +10,9 @@
 
 void display(map_data* sMap)
 {
-	for (short s = 0; s < sMap->y * 2 - 1; s++) //this column naming part needs to be rethought.
+	for (short s = 0; s < sMap->y * 2 - 1; s++)
 		if (s % 2 == 0)
-			printf("%d", s / 2 + 1); //when going above single digit numbers, the headers dont line up with the columns
+			printf("%c", s / 2 + 65);
 		else
 			printf(" ");
 
@@ -23,7 +23,7 @@ void display(map_data* sMap)
 
 	printf("\n");
 
-	for (char c = 0; c < sMap->x; c++)
+	for (unsigned char c = 0; c < sMap->x; c++)
 	{
 		for (short s = 0; s < sMap->y * 2 - 1; s++)
 			if (s % 2 == 0)
