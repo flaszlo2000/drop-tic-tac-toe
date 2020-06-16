@@ -1,7 +1,7 @@
 /**
 	@author Tamara Süli
 	@author Levente Löffler
-	@version 1.1.5 6/16/2020
+	@version 1.1.6 6/16/2020
 
 	Implementation of the turn module.
 */
@@ -31,13 +31,13 @@ int check_step(map_data* map, char* step) {
 		}	
 	}
 
-	if ((*step < 'A' || *step >= map->x + 'A') && (*step < 'a' || *step >= map->x + 'a'))
+	if ((*step < 'A' || *step >= map->y + 'A') && (*step < 'a' || *step >= map->y + 'a'))
 	{
 		printf("Incorrect column. Please retry!\n\n");
 		return 0;
 	}
 
-	if (*step >= 'a' && *step < map->x + 'a')
+	if (*step >= 'a' && *step < map->y + 'a')
 		*step -= 'a' - 'A';
 
 	if (map->pMap[0][*step - 'A'] == '0')
