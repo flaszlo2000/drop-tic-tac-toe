@@ -1,7 +1,7 @@
 /**
 	@author Tamara Süli
 	@author Levente Löffler
-	@version 1.1.0 6/16/2020
+	@version 1.1.5 6/16/2020
 
 	Implementation of the turn module.
 */
@@ -20,6 +20,17 @@ void player_turn(char* step, unsigned char round) {
 }
 
 int check_step(map_data* map, char* step) {
+	char temp = getchar();
+	while (temp != '\n')
+	{
+		temp = getchar();
+		if (temp == '\n')
+		{
+			printf("Too many characters. Please retry!\n\n");
+			return 0;
+		}	
+	}
+
 	if ((*step < 'A' || *step >= map->x + 'A') && (*step < 'a' || *step >= map->x + 'a'))
 	{
 		printf("Incorrect column. Please retry!\n\n");
