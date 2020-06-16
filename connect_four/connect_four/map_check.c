@@ -81,7 +81,7 @@ bool check_win(game_data* sGame, char nTurn)
 				}
 
 				lWin = true;
-				if (c + sGame->lLength - 1 < sGame->map.x && d - sGame->lLength + 1 > 0)
+				if (c + sGame->lLength - 1 < sGame->map.x && d - sGame->lLength + 1 >= 0)
 				{
 					for (unsigned char e = c + 1, f = d - 1; e < c + sGame->lLength && f > d - sGame->lLength; e++, f--)
 						if (sGame->map.pMap[e][f] != sGame->map.pMap[c][d])

@@ -17,10 +17,20 @@ void player_turn(char* step, unsigned char round) {
 	printf("This is the %hhu. turn.\n", round);
 	printf("Player %c, make your move: ", round % 2 ? '1' : '2');
 	scanf("\n%c", step);
-	while (getchar() != '\n');
 }
 
 int check_step(map_data* map, char* step) {
+	char temp = getchar();
+	while (temp != '\n')
+	{
+		temp = getchar();
+		if (temp == '\n')
+		{
+			printf("Too many characters. Please retry!\n\n");
+			return 0;
+		}	
+	}
+
 	if ((*step < 'A' || *step >= map->x + 'A') && (*step < 'a' || *step >= map->x + 'a'))
 	{
 		printf("Incorrect column. Please retry!\n\n");
