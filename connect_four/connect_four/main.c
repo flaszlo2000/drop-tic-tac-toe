@@ -27,7 +27,7 @@ void game_loop(game_data* game)
 
 		turn(game, nTurn);
 
-		if (check_win(&game->map, nTurn))
+		if (check_win(game, nTurn))
 		{
 			nTurn % 2 ? game->nP1_wins++ : game->nP2_wins++;
 			display(&game->map);

@@ -25,22 +25,22 @@ void init(game_data* data)
 		printf("The number of players must be 0, 1, or 2! Please retry: ");
 	}
 
-	printf("Please enter the dimensions of the map (rows-columns, 1-26): ");
+	printf("Please enter the dimensions of the map (rows-columns, 2-26): ");
 	while (1)
 	{
 		scanf("%hhu%hhu", &data->map.x, &data->map.y);
 
-		if (data->map.x != 0 && data->map.y != 0 && data->map.x <= 26 && data->map.y <= 26)
+		if (data->map.x >= 2 && data->map.y >= 2 && data->map.x <= 26 && data->map.y <= 26)
 			break;
 
-		if (data->map.x == 0 || data->map.y == 0)
+		if (data->map.x < 2 || data->map.y < 2)
 		{
-			printf("Both dimensions must be greater than 0! Please retry: ");
+			printf("Both dimensions must be at least 2! Please retry: ");
 			continue;
 		}
 			
 		if (data->map.x > 26 || data->map.y > 26)
-			printf("Nether dimension can be greater than 26! Please retry: ");
+			printf("Neither dimension can be greater than 26! Please retry: ");
 	}
 
 	data->map.pMap = malloc(data->map.x * sizeof(unsigned char*));
@@ -58,10 +58,16 @@ void init(game_data* data)
 	{
 		scanf("%hhu", &data->lLength);
 
-		if (data->lLength <= data->map.x || data->lLength <= data->map.y)
+		if ((data->lLength <= data->map.x || data->lLength <= data->map.y) && data->lLength > 1)
 			break;
 
-		printf("This number must be lower than one of the dimensions! Please retry: ");
+		if (data->lLength <= 1)
+		{
+			printf("This number must be greater than 1! Please retry: ");
+			continue;
+		}
+
+		printf("This number must be lower than the greater dimension! Please retry: ");
 	}
 
 	printf("Please enter the number of won rounds needed to win the whole game (1-255): ");
