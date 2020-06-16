@@ -10,4 +10,4 @@
 #include <stdbool.h>
 
 bool check_draw(map_data* sMap);
-bool check_win(map_data* sMap, char nTurn);
+bool check_win(game_data* sGame, char nTurn);
