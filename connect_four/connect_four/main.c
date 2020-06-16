@@ -73,6 +73,7 @@ int main()
 		while (true)
 		{
 			scanf("\n%c", &input);
+			while (getchar() != '\n');
 			if (input == 'n')
 			{
 				repeat = false;

@@ -17,7 +17,7 @@ void init(game_data* data)
 	printf("Please enter the number of players (0,1,2): ");
 	while (1)
 	{
-		if (scanf("\n%hhu", &data->nPlayers) == 0)
+		if (scanf("%hhu", &data->nPlayers) == 0)
 		{
 			printf("Not a number. Please retry: ");
 			while (getchar() != '\n');

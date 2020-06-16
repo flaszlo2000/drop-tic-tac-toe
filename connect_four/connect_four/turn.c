@@ -1,7 +1,7 @@
 /**
 	@author Tamara Süli
 	@author Levente Löffler
-	@version 1.1.0 6/16/2020
+	@version 1.1.5 6/16/2020
 
 	Implementation of the turn module.
 */
@@ -17,6 +17,7 @@ void player_turn(char* step, unsigned char round) {
 	printf("This is the %hhu. turn.\n", round);
 	printf("Player %c, make your move: ", round % 2 ? '1' : '2');
 	scanf("\n%c", step);
+	while (getchar() != '\n');
 }
 
 int check_step(map_data* map, char* step) {
