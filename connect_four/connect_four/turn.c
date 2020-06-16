@@ -16,10 +16,19 @@ void player_turn(game_data* data, int* step, unsigned char round) {
 }
 
 int check_step(game_data* data, int* step) {
-	if (*step < 1 || *step > data->map.x || data->map.pMap[0][*step-1] != '0')
+	if (*step >= 1 && *step <= data->map.x) {
+		if (data->map.pMap[0][*step - 1] == '0') {
+			return 1;
+		}
+		else {
+			printf("The column is full. Please retry!\n\n");
+			return 0;
+		}
+	}
+	else {
+		printf("Incorrect column. Please retry!\n\n");
 		return 0;
-	else
-		return 1;
+	}
 }
 
 void step_input(game_data* data, int* step, unsigned char round) {
@@ -41,11 +50,8 @@ void step_input(game_data* data, int* step, unsigned char round) {
 			break;
 		}
 
-		if (check_step(data, step, round)) {
+		if (check_step(data, step, round))
 			break;
-		}
-		else
-			printf("Illegal move. Please retry: ");
 	}
 }
 
