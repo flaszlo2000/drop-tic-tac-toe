@@ -35,7 +35,7 @@ char player_turn(map_data* map, char* sName, unsigned short round) {
 
 
 char step_input(game_data* data, unsigned short round) {
-	printf("This is the %hhu. turn.\n", round);
+	printf("This is the %hu. turn.\n", round);
 
 	if (round % 2)
 		return data->pP1->fTurn(&data->map, data->pP1->sName, round);
