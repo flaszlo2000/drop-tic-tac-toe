@@ -1,7 +1,7 @@
 /**
 	@author Tamara Süli
 	@author Levente Löffler
-	@version 1.0.7 6/16/2020
+	@version 1.0.8 6/17/2020
 
 */
 
@@ -11,7 +11,7 @@
 
 void ai_turn(game_data* data, char* step);
 
-void player_turn(char* step);
+void player_turn(game_data* data, char* step);
 
 int check_step(map_data* map, char* step);
 

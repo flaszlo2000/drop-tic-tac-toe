@@ -1,7 +1,7 @@
 /**
 	@author Levente Löffler
 	@author Tamara Süli
-	@version 1.2.0 6/15/2020
+	@version 1.2.1 6/17/2020
 
 	Main function and game loop.
 */
@@ -29,9 +29,9 @@ void game_loop(game_data* game)
 
 		if (check_win(game, nTurn))
 		{
-			nTurn % 2 ? game->nP1_wins++ : game->nP2_wins++;
+			nTurn % 2 ? game->pP1->cWins++ : game->pP2->cWins++;
 			display(&game->map);
-			printf("Player %c won this round!\n", nTurn % 2 ? '1' : '2');
+			printf("%s won this round!\n", nTurn % 2 ? game->pP1->sName : game->pP2->sName);
 			return;
 		}
 
@@ -58,16 +58,16 @@ int main()
 
 		init(&game);
 
-		while (game.nP1_wins < game.nWins && game.nP2_wins < game.nWins)
+		while (game.pP1->cWins < game.nWins && game.pP2->cWins < game.nWins)
 		{
 			game_loop(&game);
 			if (game.nWins > 1)
 				reset(&game.map);
 		}
 			
-		printf(game.nP1_wins == game.nP2_wins ? "The match has come to a draw.\n" : "Victory! Player %c has won the match!\n", game.nP1_wins < game.nP2_wins ? '2' : '1');
+		printf(game.pP1->cWins == game.pP2->cWins ? "The match has come to a draw.\n" : "Victory! %s has won the match!\n", game.pP1->cWins < game.pP2->cWins ? game.pP2->sName : game.pP1->sName);
 
-		uninit(&game.map);
+		uninit(&game);
 
 		printf("Would you like to play again? (y/n): ");
 		char input;

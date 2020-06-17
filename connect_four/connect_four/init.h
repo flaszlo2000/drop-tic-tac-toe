@@ -1,6 +1,6 @@
 /**
 	@author Levente Löffler
-	@version 1.1.0 6/15/2020
+	@version 1.1.5 6/17/2020
 
 	This module handles the data structure initializations and uninitializations.
 */
@@ -10,4 +10,4 @@
 
 void init(game_data* game);
 void reset(map_data* map);
-void uninit(map_data* map);
+void uninit(game_data* game);

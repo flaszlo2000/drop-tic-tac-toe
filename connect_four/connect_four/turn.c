@@ -1,7 +1,7 @@
 /**
 	@author Tamara Süli
 	@author Levente Löffler
-	@version 1.1.6 6/16/2020
+	@version 1.2.0 6/17/2020
 
 	Implementation of the turn module.
 */
@@ -12,7 +12,7 @@
 
 void ai_turn(game_data* data, char* step) {}
 
-void player_turn(char* step) {
+void player_turn(game_data* data, char* step) {
 
 	scanf("\n%c", step);
 }
@@ -47,25 +47,13 @@ int check_step(map_data* map, char* step) {
 
 void step_input(game_data* data, char* step, unsigned char round) {
 	printf("This is the %hhu. turn.\n", round);
-	printf("Player %c, make your move: ", round % 2 ? '1' : '2');
+	printf("%s, make your move: ", round % 2 ? data->pP1->sName : data->pP2->sName);
 	
 	while (1) {
-		switch (data->nPlayers) {
-		case 0:
-			ai_turn(data, step, round);
-			break;
-
-		case 1:
-			if (round % 2 == 1)
-				player_turn(step, round);
-			else
-				ai_turn(data, step, round);
-			break;
-
-		case 2:
-			player_turn(step, round);
-			break;
-		}
+		if (round % 2)
+			data->pP1->fTurn(data, step);
+		else
+			data->pP2->fTurn(data, step);
 
 		if (check_step(&data->map, step))
 			break;
