@@ -40,5 +40,5 @@ void display(map_data* sMap)
 	for (unsigned char c = 0; c < 20; c++)
 		printf("-");
 
-	printf("\n\n");
+	printf("\n");
 }

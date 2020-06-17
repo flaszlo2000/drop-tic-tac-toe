@@ -1,7 +1,7 @@
 /**
 	@author Levente Löffler
 	@author Tamara Süli
-	@version 1.2.2 6/17/2020
+	@version 1.2.3 6/17/2020
 
 	Main function and game loop.
 */
@@ -15,18 +15,16 @@
 
 
 
-void game_loop(game_data* game)
+void game_loop(game_data* game, unsigned char nRound)
 {
 	printf("\n");
-
-	for (unsigned char d = 0; d < 2; d++)
-	{
-		for (unsigned char c = 0; c < 20; c++)
-			printf("~");
-		printf("\n");
-	}
-		
-	printf("\nRound begins.\n");
+	for (unsigned char c = 0; c < 20; c++)
+		printf("#");
+	printf("\n%s %hhu - %hhu %s\n", game->pP1->sName, game->pP1->cWins, game->pP2->cWins, game->pP2->sName);
+	printf("\nRound %hhu begins.\n", nRound);
+	for (unsigned char c = 0; c < 20; c++)
+		printf("#");
+	printf("\n");
 
 	unsigned char nTurn = 1;
 
@@ -41,6 +39,9 @@ void game_loop(game_data* game)
 			nTurn % 2 ? game->pP1->cWins++ : game->pP2->cWins++;
 			display(&game->map);
 			printf("%s won this round!\n", nTurn % 2 ? game->pP1->sName : game->pP2->sName);
+			for (unsigned char c = 0; c < 20; c++)
+				printf("-");
+			printf("\n");
 			return;
 		}
 
@@ -48,6 +49,9 @@ void game_loop(game_data* game)
 		{
 			display(&game->map);
 			printf("The round has come to a draw!\n");
+			for (unsigned char c = 0; c < 20; c++)
+				printf("-");
+			printf("\n");
 			return;
 		}
 
@@ -67,9 +71,9 @@ int main()
 
 		init(&game);
 
-		while (game.pP1->cWins < game.nWins && game.pP2->cWins < game.nWins)
+		for (unsigned char c = 1; game.pP1->cWins < game.nWins && game.pP2->cWins < game.nWins; c++)
 		{
-			game_loop(&game);
+			game_loop(&game, c);
 
 			if (game.nWins > 1)
 			{
@@ -79,12 +83,19 @@ int main()
 				reset(&game.map);
 			}	
 		}
-			
+		
+		printf("\n");
+		for (unsigned char c = 0; c < 20; c++)
+			printf("~");
+		printf("\n");
 		printf(game.pP1->cWins == game.pP2->cWins ? "The match has come to a draw.\n" : "Victory! %s has won the match!\n", game.pP1->cWins < game.pP2->cWins ? game.pP2->sName : game.pP1->sName);
+		for (unsigned char c = 0; c < 20; c++)
+			printf("~");
+		printf("\n");
 
 		uninit(&game);
 
-		printf("Would you like to play again? (y/n): ");
+		printf("\nWould you like to play again? (y/n): ");
 		char input;
 
 	readrepeat:
