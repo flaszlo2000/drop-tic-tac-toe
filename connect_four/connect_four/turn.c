@@ -12,14 +12,14 @@
 
 
 
-char ai_turn(map_data* map, char* sName, unsigned char round) {
+char ai_turn(map_data* map, char* sName, unsigned short round) {
 	printf("%s making its turn now.\n", sName);
 	return 'A'; //placeholder
 }
 
 
 
-char player_turn(map_data* map, char* sName, unsigned char round) {
+char player_turn(map_data* map, char* sName, unsigned short round) {
 	char step;
 
 	printf("%s, make your move: ", sName);
@@ -34,7 +34,7 @@ char player_turn(map_data* map, char* sName, unsigned char round) {
 
 
 
-char step_input(game_data* data, unsigned char round) {
+char step_input(game_data* data, unsigned short round) {
 	printf("This is the %hhu. turn.\n", round);
 
 	if (round % 2)
@@ -44,7 +44,7 @@ char step_input(game_data* data, unsigned char round) {
 
 
 
-void step_perform(map_data* map, char step, unsigned char round) {
+void step_perform(map_data* map, char step, unsigned short round) {
 	unsigned char ch = round % 2 ? '1' : '2';
 
 	for (int i = map->x - 1; i >= 0; i--) {
@@ -87,6 +87,6 @@ int check_step(map_data* map, char* step) {
 
 
 
-void turn(game_data* data, unsigned char round) {
+void turn(game_data* data, unsigned short round) {
 	step_perform(&data->map, step_input(data, round), round);
 }
