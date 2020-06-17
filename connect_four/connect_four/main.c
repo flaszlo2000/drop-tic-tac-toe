@@ -1,7 +1,7 @@
 /**
 	@author Levente Löffler
 	@author Tamara Süli
-	@version 1.2.1 6/17/2020
+	@version 1.2.2 6/17/2020
 
 	Main function and game loop.
 */
@@ -17,7 +17,16 @@
 
 void game_loop(game_data* game)
 {
-	printf("Round begins.\n");
+	printf("\n");
+
+	for (unsigned char d = 0; d < 2; d++)
+	{
+		for (unsigned char c = 0; c < 20; c++)
+			printf("~");
+		printf("\n");
+	}
+		
+	printf("\nRound begins.\n");
 
 	unsigned char nTurn = 1;
 
@@ -61,8 +70,14 @@ int main()
 		while (game.pP1->cWins < game.nWins && game.pP2->cWins < game.nWins)
 		{
 			game_loop(&game);
+
 			if (game.nWins > 1)
+			{
+				player_data* tmp = game.pP1;
+				game.pP1 = game.pP2;
+				game.pP2 = tmp;
 				reset(&game.map);
+			}	
 		}
 			
 		printf(game.pP1->cWins == game.pP2->cWins ? "The match has come to a draw.\n" : "Victory! %s has won the match!\n", game.pP1->cWins < game.pP2->cWins ? game.pP2->sName : game.pP1->sName);

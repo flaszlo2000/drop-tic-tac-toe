@@ -1,6 +1,6 @@
 /**
 	@author Levente Löffler
-	@version 1.2.0 6/17/2020
+	@version 1.2.1 6/17/2020
 
 	This header declares the necessary data structures used by other modules.
 */
@@ -9,7 +9,7 @@
 typedef struct player_data
 {
 	char* sName;
-	void (*fTurn)();
+	char (*fTurn)();
 	unsigned char cWins;
 } player_data;
 

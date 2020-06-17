@@ -1,6 +1,6 @@
 /**
 	@author Levente Löffler
-	@version 1.0.5 6/16/2020
+	@version 1.0.6 6/17/2020
 
 	Implementation of the display module.
 */
@@ -10,6 +10,8 @@
 
 void display(map_data* sMap)
 {
+	printf("\n");
+
 	for (short s = 0; s < sMap->y * 2 - 1; s++)
 		if (s % 2 == 0)
 			printf("%c", s / 2 + 65);
@@ -34,4 +36,9 @@ void display(map_data* sMap)
 	}
 		
 	printf("\n");
+
+	for (unsigned char c = 0; c < 20; c++)
+		printf("-");
+
+	printf("\n\n");
 }

@@ -1,6 +1,6 @@
 /**
 	@author Levente Löffler
-	@version 1.3.0 6/17/2020
+	@version 1.3.6 6/17/2020
 
 	Implementation of the init module.
 */
@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 
 
@@ -20,10 +21,11 @@ void init(game_data* data)
 	char nPlayers;
 	while (1)
 	{
-		if (scanf("%hhu", &nPlayers) == 0)
+		int scan = scanf("%hhu", &nPlayers);
+		while (getchar() != '\n');
+		if (!scan)
 		{
 			printf("Not a number. Please retry: ");
-			while (getchar() != '\n');
 			continue;
 		}
 
@@ -41,22 +43,70 @@ void init(game_data* data)
 	switch (nPlayers)
 	{
 		case 0:
-			pTempPlayer1->sName = "AI";
-			pTempPlayer2->sName = "AI";
+			pTempPlayer1->sName = malloc(sizeof("AI"));
+			pTempPlayer2->sName = malloc(sizeof("AI"));
+			strcpy(pTempPlayer1->sName, "AI");
+			strcpy(pTempPlayer2->sName, "AI");
 			pTempPlayer1->fTurn = &ai_turn;
 			pTempPlayer2->fTurn = &ai_turn;
 			break;
 
 		case 1:
-			pTempPlayer1->sName = "TEMPPLAYER1";//placeholder
-			pTempPlayer2->sName = "AI";
+			printf("Please enter a player name (max 20 characters): ");
+
+			char buffer[21];
+			while(fgets(buffer, 21, stdin)[0] == '\n');
+
+			strcpy(buffer, strtok(buffer, "\n"));
+
+			unsigned char len = 0;
+			while (buffer[len])
+				len++;
+
+			pTempPlayer1->sName = malloc(len + 1 * sizeof(char));
+			strcpy(pTempPlayer1->sName, buffer);
+
+			pTempPlayer2->sName = malloc(sizeof("AI"));
+			strcpy(pTempPlayer2->sName, "AI");
+
 			pTempPlayer1->fTurn = &player_turn;
 			pTempPlayer2->fTurn = &ai_turn;
+
 			break;
 
 		case 2:
-			pTempPlayer1->sName = "TEMPPLAYER1";//placeholder
-			pTempPlayer2->sName = "TEMPPLAYER2";//placeholder
+			printf("Please enter a player name (max 20 characters): ");
+
+			while(fgets(buffer, 21, stdin)[0] == '\n');
+
+			strcpy(buffer, strtok(buffer, "\n"));
+
+			len = 0;
+			while (buffer[len])
+				len++;
+
+			pTempPlayer1->sName = malloc(len + 1 * sizeof(char));
+			strcpy(pTempPlayer1->sName, buffer);
+
+			printf("Please enter another player name (max 20 characters): ");
+			while (1)
+			{
+				while (fgets(buffer, 21, stdin)[0] == '\n');
+				strcpy(buffer, strtok(buffer, "\n"));
+
+				if (strcmp(buffer, pTempPlayer1->sName))
+					break;
+
+				printf("The two player names cannot match! Please retry: ");
+			}
+			
+			len = 0;
+			while (buffer[len])
+				len++;
+
+			pTempPlayer2->sName = malloc(len + 1 * sizeof(char));
+			strcpy(pTempPlayer2->sName, buffer);
+
 			pTempPlayer1->fTurn = &player_turn;
 			pTempPlayer2->fTurn = &player_turn;
 	}
@@ -79,7 +129,7 @@ void init(game_data* data)
 	printf("Please enter the dimensions of the map (rows-columns, 2-26): ");
 	while (1)
 	{
-		if (scanf("%hhu%hhu", &data->map.x, &data->map.y) == 0)
+		if (!scanf("%hhu%hhu", &data->map.x, &data->map.y))
 		{
 			printf("Not numbers. Please retry: ");
 			while (getchar() != '\n');
@@ -113,7 +163,7 @@ void init(game_data* data)
 	printf("Please enter the number of marks that have to be in a row in order to win: ");
 	while (1)
 	{
-		if (scanf("%hhu", &data->lLength) == 0)
+		if (!scanf("%hhu", &data->lLength))
 		{
 			printf("Not a number. Please retry: ");
 			while (getchar() != '\n');
@@ -136,7 +186,7 @@ void init(game_data* data)
 	printf("Please enter the number of won rounds needed to win the whole game (1-255): ");
 	while (1)
 	{
-		if (scanf("%hhu", &data->nWins) == 0)
+		if (!scanf("%hhu", &data->nWins))
 		{
 			printf("Not a number. Please retry: ");
 			while (getchar() != '\n');
@@ -163,6 +213,9 @@ void reset(map_data* map)
 
 void uninit(game_data* game)
 {
+	free(game->pP1->sName);
+	free(game->pP2->sName);
+
 	free(game->pP1);
 	free(game->pP2);
 
