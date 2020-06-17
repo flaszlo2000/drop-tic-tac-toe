@@ -1,6 +1,6 @@
 /**
 	@author Levente Löffler
-	@version 1.3.6 6/17/2020
+	@version 1.3.7 6/17/2020
 
 	Implementation of the init module.
 */
@@ -43,10 +43,10 @@ void init(game_data* data)
 	switch (nPlayers)
 	{
 		case 0:
-			pTempPlayer1->sName = malloc(sizeof("AI"));
-			pTempPlayer2->sName = malloc(sizeof("AI"));
-			strcpy(pTempPlayer1->sName, "AI");
-			strcpy(pTempPlayer2->sName, "AI");
+			pTempPlayer1->sName = malloc(sizeof("AI1"));
+			pTempPlayer2->sName = malloc(sizeof("AI2"));
+			strcpy(pTempPlayer1->sName, "AI1");
+			strcpy(pTempPlayer2->sName, "AI2");
 			pTempPlayer1->fTurn = &ai_turn;
 			pTempPlayer2->fTurn = &ai_turn;
 			break;
@@ -204,8 +204,8 @@ void init(game_data* data)
 
 void reset(map_data* map)
 {
-	for (char c = 0; c < map->x; c++)
-		for (char d = 0; d < map->y; d++)
+	for (unsigned char c = 0; c < map->x; c++)
+		for (unsigned char d = 0; d < map->y; d++)
 			map->pMap[c][d] = '0';
 }
 
@@ -219,7 +219,7 @@ void uninit(game_data* game)
 	free(game->pP1);
 	free(game->pP2);
 
-	for (char c = 0; c < game->map.x; c++)
+	for (unsigned char c = 0; c < game->map.x; c++)
 		free(game->map.pMap[c]);
 	free(game->map.pMap);
 }

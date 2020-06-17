@@ -1,7 +1,7 @@
 /**
 	@author Tamara Süli
 	@author Levente Löffler
-	@version 1.3.0 6/17/2020
+	@version 1.3.1 6/17/2020
 
 	Implementation of the turn module.
 */
@@ -12,22 +12,22 @@
 
 
 
-char ai_turn(game_data* data, unsigned char round) {
-	printf("AI making its turn now.\n");
+char ai_turn(map_data* map, char* sName, unsigned char round) {
+	printf("%s making its turn now.\n", sName);
 	return 'A'; //placeholder
 }
 
 
 
-char player_turn(game_data* data, unsigned char round) {
+char player_turn(map_data* map, char* sName, unsigned char round) {
 	char step;
 
-	printf("%s, make your move: ", round % 2 ? data->pP1->sName : data->pP2->sName);
+	printf("%s, make your move: ", sName);
 
 	while (1)
 	{
 		scanf("\n%c", &step);
-		if (check_step(&data->map, &step))
+		if (check_step(map, &step))
 			return step;
 	}
 }
@@ -38,8 +38,8 @@ char step_input(game_data* data, unsigned char round) {
 	printf("This is the %hhu. turn.\n", round);
 
 	if (round % 2)
-		return data->pP1->fTurn(data, round);
-	return data->pP2->fTurn(data, round);
+		return data->pP1->fTurn(&data->map, data->pP1->sName, round);
+	return data->pP2->fTurn(&data->map, data->pP2->sName, round);
 }
 
 
