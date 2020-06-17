@@ -27,7 +27,7 @@ void game_loop(game_data* game)
 
 		turn(game, nTurn);
 
-		if (check_win(&game->map, nTurn))
+		if (check_win(game, nTurn))
 		{
 			nTurn % 2 ? game->nP1_wins++ : game->nP2_wins++;
 			display(&game->map);
@@ -51,6 +51,7 @@ void game_loop(game_data* game)
 int main()
 {
 	bool repeat = true;
+
 	while (repeat)
 	{
 		game_data game;
@@ -70,14 +71,29 @@ int main()
 
 		printf("Would you like to play again? (y/n): ");
 		char input;
+
+	readrepeat:
 		while (true)
 		{
 			scanf("\n%c", &input);
+
+			char temp = getchar();
+			while (temp != '\n')
+			{
+				temp = getchar();
+				if (temp == '\n')
+				{
+					printf("Too many characters. Please retry: ");
+					goto readrepeat;
+				}
+			}
+
 			if (input == 'n')
 			{
 				repeat = false;
 				break;
 			}
+
 			if (input == 'y')
 				break;
 			else

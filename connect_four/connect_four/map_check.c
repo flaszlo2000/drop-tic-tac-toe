@@ -11,50 +11,96 @@
 
 bool check_draw(map_data* sMap)
 {
-	for (char c = 0; c < sMap->x; c++)
-		for (char d = 0; d < sMap->y; d++)
+	for (unsigned char c = 0; c < sMap->x; c++)
+		for (unsigned char d = 0; d < sMap->y; d++)
 			if (sMap->pMap[c][d] == '0')
 				return false;
 	return true;
 }
 
-bool check_win(map_data* sMap, char nTurn)
+bool check_win(game_data* sGame, char nTurn)
 {
 	bool ret = false;
-	for (char c = 0; c < sMap->x; c++)
-		for (char d = 0; d < sMap->y; d++)
-			if (sMap->pMap[c][d] == (nTurn % 2 ? '1' : '2'))
+
+	for (unsigned char c = 0; c < sGame->map.x; c++)
+		for (unsigned char d = 0; d < sGame->map.y; d++)
+			if (sGame->map.pMap[c][d] == (nTurn % 2 ? '1' : '2'))
 			{
-				if (d + 3 < sMap->y)
-					if (sMap->pMap[c][d + 1] == sMap->pMap[c][d] && sMap->pMap[c][d + 2] == sMap->pMap[c][d] && sMap->pMap[c][d + 3] == sMap->pMap[c][d])
-					{
-						for (char e = d; e <= d + 3; e++)
-							sMap->pMap[c][e] = '-';
-						ret = true;
-					}
-				if (c + 3 < sMap->x && d + 3 < sMap->y)
-					if (sMap->pMap[c + 1][d + 1] == sMap->pMap[c][d] && sMap->pMap[c + 2][d + 2] == sMap->pMap[c][d] && sMap->pMap[c + 3][d + 3] == sMap->pMap[c][d])
-					{
-						for (char e = c, f = d; e <= c + 3 && f <= d + 3; e++, f++)
-							sMap->pMap[e][f] = '\\';
-						ret = true;
-					}
-				if (c + 3 < sMap->x)
-					if (sMap->pMap[c + 1][d] == sMap->pMap[c][d] && sMap->pMap[c + 2][d] == sMap->pMap[c][d] && sMap->pMap[c + 3][d] == sMap->pMap[c][d])
-					{
-						for (char e = c; e <= c + 3; e++)
-							sMap->pMap[e][d] = '|';
-						ret = true;
-					}
-				if (c + 3 < sMap->x && d - 3 > 0)
-					if (sMap->pMap[c + 1][d - 1] == sMap->pMap[c][d] && sMap->pMap[c + 2][d - 2] == sMap->pMap[c][d] && sMap->pMap[c + 3][d - 3] == sMap->pMap[c][d])
-					{
-						for (char e = c, f = d; e <= c + 3 && f >= d - 3; e++, f--)
-							sMap->pMap[e][f] = '/';
-						ret = true;
-					}
+				bool lWin = true;
+				if (d + sGame->lLength - 1 < sGame->map.y)
+				{
+					for (unsigned char e = d + 1; e < d + sGame->lLength; e++)
+						if (sGame->map.pMap[c][e] != sGame->map.pMap[c][d])
+						{
+							lWin = false;
+							break;
+						}
+
+					if (lWin)
+						for (unsigned char e = d; e < d + sGame->lLength; e++)
+						{
+							sGame->map.pMap[c][e] = '-';
+							ret = true;
+						}
+				}
+
+				lWin = true;
+				if (c + sGame->lLength - 1 < sGame->map.x && d + sGame->lLength - 1 < sGame->map.y)
+				{
+					for (unsigned char e = c + 1, f = d + 1; e < c + sGame->lLength && f < d + sGame->lLength; e++, f++)
+						if (sGame->map.pMap[e][f] != sGame->map.pMap[c][d])
+						{
+							lWin = false;
+							break;
+						}
+
+					if (lWin)
+						for (unsigned char e = c, f = d; e < c + sGame->lLength && f < d + sGame->lLength; e++, f++)
+						{
+							sGame->map.pMap[e][f] = '\\';
+							ret = true;
+						}
+				}
+
+				lWin = true;
+				if (c + sGame->lLength - 1 < sGame->map.x)
+				{
+					for (unsigned char e = c + 1; e < c + sGame->lLength; e++)
+						if (sGame->map.pMap[e][d] != sGame->map.pMap[c][d])
+						{
+							lWin = false;
+							break;
+						}
+
+					if (lWin)
+						for (unsigned char e = c; e < c + sGame->lLength; e++)
+						{
+							sGame->map.pMap[e][d] = '|';
+							ret = true;
+						}
+				}
+
+				lWin = true;
+				if (c + sGame->lLength - 1 < sGame->map.x && d - sGame->lLength + 1 >= 0)
+				{
+					for (unsigned char e = c + 1, f = d - 1; e < c + sGame->lLength && f > d - sGame->lLength; e++, f--)
+						if (sGame->map.pMap[e][f] != sGame->map.pMap[c][d])
+						{
+							lWin = false;
+							break;
+						}
+
+					if (lWin)
+						for (unsigned char e = c, f = d; e < c + sGame->lLength && f > d - sGame->lLength; e++, f--)
+						{
+							sGame->map.pMap[e][f] = '/';
+							ret = true;
+						}
+				}
+
 				if (ret)
 					break;
 			}
+
 	return ret;
 }
