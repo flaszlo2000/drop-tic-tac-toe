@@ -1,7 +1,7 @@
 /**
 	@author Tamara Süli
 	@author Levente Löffler
-	@version 1.1.6 6/16/2020
+	@version 1.3.1 6/17/2020
 
 	Implementation of the turn module.
 */
@@ -10,12 +10,52 @@
 #include "turn.h"
 #include <stdio.h>
 
-void ai_turn(game_data* data, char* step) {}
 
-void player_turn(char* step) {
 
-	scanf("\n%c", step);
+char ai_turn(map_data* map, char* sName, unsigned char round) {
+	printf("%s making its turn now.\n", sName);
+	return 'A'; //placeholder
 }
+
+
+
+char player_turn(map_data* map, char* sName, unsigned char round) {
+	char step;
+
+	printf("%s, make your move: ", sName);
+
+	while (1)
+	{
+		scanf("\n%c", &step);
+		if (check_step(map, &step))
+			return step;
+	}
+}
+
+
+
+char step_input(game_data* data, unsigned char round) {
+	printf("This is the %hhu. turn.\n", round);
+
+	if (round % 2)
+		return data->pP1->fTurn(&data->map, data->pP1->sName, round);
+	return data->pP2->fTurn(&data->map, data->pP2->sName, round);
+}
+
+
+
+void step_perform(map_data* map, char step, unsigned char round) {
+	unsigned char ch = round % 2 ? '1' : '2';
+
+	for (int i = map->x - 1; i >= 0; i--) {
+		if (map->pMap[i][step - 'A'] == '0') {
+			map->pMap[i][step - 'A'] = ch;
+			break;
+		}
+	}
+}
+
+
 
 int check_step(map_data* map, char* step) {
 	char temp = getchar();
@@ -45,49 +85,8 @@ int check_step(map_data* map, char* step) {
 	return 0;
 }
 
-void step_input(game_data* data, char* step, unsigned char round) {
-	printf("This is the %hhu. turn.\n", round);
-	printf("Player %c, make your move: ", round % 2 ? '1' : '2');
-	
-	while (1) {
-		switch (data->nPlayers) {
-		case 0:
-			ai_turn(data, step, round);
-			break;
 
-		case 1:
-			if (round % 2 == 1)
-				player_turn(step, round);
-			else
-				ai_turn(data, step, round);
-			break;
-
-		case 2:
-			player_turn(step, round);
-			break;
-		}
-
-		if (check_step(&data->map, step))
-			break;
-	}
-}
-
-void step_perform(map_data* map, char* step, unsigned char round) {
-	unsigned char ch = round % 2 ? '1' : '2';
-
-	for (int i = map->x - 1; i >= 0; i--) {
-		if (map->pMap[i][*step - 'A'] == '0') {
-			map->pMap[i][*step - 'A'] = ch;
-			break;
-		}
-	}
-}
 
 void turn(game_data* data, unsigned char round) {
-	char step;
-
-	step_input(data, &step, round);
-
-	step_perform(&data->map, &step, round);
-
+	step_perform(&data->map, step_input(data, round), round);
 }

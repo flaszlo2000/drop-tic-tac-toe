@@ -5,9 +5,13 @@
 	This module provides function to iterate over the map and check for wins and draws.
 */
 
-#pragma once
+#ifndef MAP_CHECK_H
+#define MAP_CHECK_H
+
 #include "data.h"
 #include <stdbool.h>
 
 bool check_draw(map_data* sMap);
 bool check_win(game_data* sGame, char nTurn);
+
+#endif

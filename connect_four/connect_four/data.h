@@ -1,11 +1,12 @@
 /**
 	@author Levente Löffler
-	@version 1.1.0 6/16/2020
+	@version 1.2.2 6/17/2020
 
 	This header declares the necessary data structures used by other modules.
 */
 
-#pragma once
+#ifndef DATA_H
+#define DATA_H
 
 typedef struct map_data
 {
@@ -16,12 +17,22 @@ typedef struct map_data
 
 
 
+typedef struct player_data
+{
+	char* sName;
+	char (*fTurn)(map_data*, char*, unsigned char);
+	unsigned char cWins;
+} player_data;
+
+
+
 typedef struct game_data
 {
-	unsigned char nPlayers;
 	unsigned char nWins;
 	unsigned char lLength;
-	unsigned char nP1_wins;
-	unsigned char nP2_wins;
+	player_data* pP1;
+	player_data* pP2;
 	map_data map;
 } game_data;
+
+#endif
