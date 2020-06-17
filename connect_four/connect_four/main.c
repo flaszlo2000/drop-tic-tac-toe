@@ -26,7 +26,7 @@ void game_loop(game_data* game, unsigned char nRound)
 		printf("#");
 	printf("\n");
 
-	unsigned char nTurn = 1;
+	unsigned short nTurn = 1;
 
 	while (true)
 	{

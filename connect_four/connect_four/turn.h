@@ -11,15 +11,15 @@
 
 #include "data.h"
 
-void turn(game_data* data, unsigned char round);
+void turn(game_data* data, unsigned short round);
 
-char step_input(game_data* data, unsigned char round);
+char step_input(game_data* data, unsigned short round);
 
-void step_perform(map_data* data, char step, unsigned char round);
+void step_perform(map_data* data, char step, unsigned short round);
 
-char ai_turn(map_data* map, char* sName, unsigned char round);
+char ai_turn(map_data* map, char* sName, unsigned short round);
 
-char player_turn(map_data* map, char* sName, unsigned char round);
+char player_turn(map_data* map, char* sName, unsigned short round);
 
 int check_step(map_data* map, char* step);
 
