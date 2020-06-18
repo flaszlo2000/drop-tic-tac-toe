@@ -1,6 +1,6 @@
 /**
-	@author Levente Löffler
-	@author Tamara Süli
+	@author Levente Lï¿½ffler
+	@author Tamara Sï¿½li
 	@version 1.2.3 6/17/2020
 
 	Main function and game loop.
@@ -33,6 +33,7 @@ void game_loop(game_data* game, unsigned char nRound)
 		display(&game->map);
 
 		turn(game, nTurn);
+		//break; // FIXME: for test
 
 		if (check_win(game, nTurn))
 		{
@@ -82,6 +83,7 @@ int main()
 				game.pP2 = tmp;
 				reset(&game.map);
 			}	
+		//break; // FIXME: to test
 		}
 		
 		printf("\n");

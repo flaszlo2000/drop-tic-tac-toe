@@ -16,8 +16,10 @@
 
 char ai_turn(map_data* map, char* sName, unsigned short round) {
 	printf("%s making its turn now.\n", sName);
-	test(map, round);
-	return 'A'; //placeholder
+	char result = ai_main(map, round);
+
+	printf("ai decision: %c\n", result);
+	return result;
 }
 
 
