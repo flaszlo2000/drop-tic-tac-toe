@@ -43,9 +43,9 @@ bool empty_pos(map_data * map, int x, int y) {
 
 char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal) {
     printf("given id: %d\n", needed_char);
-    int c = 0; // this will contain the symbol count in a line
-    int zero_counter = 0;
-    int zero_pos = 0;
+    int c = 0; // this will contain the symbol count in a line (only for |)
+    int zero_counter = 0; // this will count the amount of zeros in a sequence
+    int zero_pos = 0; // this will contant the place where the zero is
 
     // check from the left-bottom corner
     for(int i=map->x - 1; i >= 0; i--) {
@@ -101,6 +101,7 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
                 }
 
                 c = 1;
+                zero_pos = 0;
                 // check /
 
                 
