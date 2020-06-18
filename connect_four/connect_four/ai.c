@@ -53,7 +53,7 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
             if(map->pMap[i][j] == needed_char + '0') {
                 c = 1; // reset the counter
 
-                // check | (atm upvards)
+                // check | (up)
                 for(int k=i; k >= 0; k--) {
                     // count how many symbols do we have in a line
                     if(map->pMap[k][j] == needed_char + '0') {
@@ -69,8 +69,7 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
                 }
                 if(c == goal) { return get_char_from_int(j); }
 
-                c = 1;
-                // check ->
+                // check -- (right)
                 for(int k=j; k < map->y; k++) {
                     zero_counter = 0;
 
@@ -91,7 +90,7 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
                             c = goal;
                             break;
                         }
-                    } else { // what if we dont have enough place for the invesigation
+                    } else { // what if we dont have enough place for the invesigation (we could optimalize this)
                         break;
                     }
                 }
@@ -100,9 +99,42 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
                     return get_char_from_int(zero_pos);
                 }
 
-                c = 1;
                 zero_pos = 0;
-                // check /
+                // check / (up-right)
+                if(i-goal-1 >= 0 && j+goal-1 < map->y) {
+                    zero_counter = 0;
+                    
+                    for(int k=0; k < goal-1; k++) {
+                        if(map->pMap[i-k][j+k] != needed_char + '0') {
+                            if(map->pMap[i-k][j+k] == 0 + '0') { // if the number is 0, this is good, and we save thats position (but we will let only one from them to exist)
+                                printf("!!!!!!!!!!!!!!!!!!!!!zero found: %d %d\n", i-k, j+k);
+                                if(k > 0) {
+                                    if(map->pMap[i-k+1][j+k] == 0 + '0') {
+                                        zero_counter = 0;
+                                        break;
+                                    } else { // if there is not void underneath the chosen number
+                                        zero_pos = j+k;
+                                        zero_counter++;
+                                    }
+                                }
+                            } else { // or if it is not zero, this means this is already taken for an other user
+                                zero_counter = 0;
+                                break; // with this situation, we dont need to continue the investigating
+                            }
+                        } 
+
+                        //printf("\n");
+                    }
+
+                    if(zero_counter == 1) { // we want to see only one zero! and that could be anywhere in the sequence (so this is why we saved that position)
+                        c = goal; // with this method we have a gap filler methos as well 
+                    }
+                }
+
+                if(c == goal) {
+                    printf("yetttttttttttttttttttttttttttttttttttt\n");
+                    return get_char_from_int(zero_pos);
+                }
 
                 
             }
@@ -151,12 +183,3 @@ char ai_main(map_data * map, unsigned short round, unsigned char goal) {
 
     return result;
 }
-
-/*
-NOTE:
-    map's pMap is a char based two dimensional array
-    map's x and y are numbers
-
-    round starts with 1
-
-*/
