@@ -44,6 +44,8 @@ bool empty_pos(map_data * map, int x, int y) {
 char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal) {
     printf("given id: %d\n", needed_char);
     int c = 0; // this will contain the symbol count in a line
+    int zero_counter = 0;
+    int zero_pos = 0;
 
     // check from the left-bottom corner
     for(int i=map->x - 1; i >= 0; i--) {
@@ -51,28 +53,55 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
             if(map->pMap[i][j] == needed_char + '0') {
                 c = 1; // reset the counter
 
-                // check to upvards
+                // check | (atm upvards)
                 for(int k=i; k >= 0; k--) {
                     // count how many symbols do we have in a line
                     if(map->pMap[k][j] == needed_char + '0') {
-                        //printf("kj: %d %d\n", k, j);
                         c++;
                     } else {
-                        printf("off\n");
                         if(map->pMap[k][j] != 0 + '0') {
-                            printf("foglalt\n");
-                            
+                            // if an other player owns the next place
                             c = 0;
                         }
                         
                         break;
                     }
                 }
+                if(c == goal) { return get_char_from_int(j); }
+
+                c = 1;
+                // check ->
+                for(int k=j; k < map->y; k++) {
+                    zero_counter = 0;
+
+                    if(k+goal-1 < map->y) {
+                        for(int l=k; l < k+goal; l++) {
+                            if(map->pMap[i][l] != needed_char + '0') {
+                                if(map->pMap[i][l] == 0 + '0') {
+                                    zero_pos = l;
+                                    zero_counter++;
+                                } else {
+                                    zero_counter = 0;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if(zero_counter == 1) {
+                            c = goal;
+                            break;
+                        }
+                    } else {
+                        break;
+                    }
+                }
 
                 if(c == goal) {
-                    printf("returned with %d\n", j);
-                    return get_char_from_int(j);
+                    return get_char_from_int(zero_pos);
                 }
+
+
+                
             }
         }
     }

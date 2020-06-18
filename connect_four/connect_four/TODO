@@ -1,10 +1,18 @@
-valahogy el kellene menteni a pontokat, de ehhez minimum inicializálni kellene a
-get_user_point_count -ot egy wrapper -el.
+0 1 1 1
 
-wrapper call:
-    int len = get_user_point_count(current_user_id, NULL) 
-    // here the NULL for the header
+1 0 1 1
 
-    point * user_tokens = malloc(sizeof(point) * len)
+1 1 0 1
 
-    get_user_point_count(user_tokens)
+1 1 1 0
+
+p 
+
+be kellene olvasni a 'p' re plusz hármat és ha csak egy nulla van benne akkor a nulla helyét visszadobni
+
+
+map->y = 5
+goal = 4
+k = 0
+
+if(k+goal-1 < )
