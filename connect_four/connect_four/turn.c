@@ -1,6 +1,7 @@
 /**
-	@author Tamara Süli
-	@author Levente Löffler
+	@author Tamara Sï¿½li
+	@author Levente Lï¿½ffler
+	@author Fazekas LÃ¡szlÃ³
 	@version 1.3.1 6/17/2020
 
 	Implementation of the turn module.
@@ -8,12 +9,14 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 #include "turn.h"
+#include "ai.h"
 #include <stdio.h>
 
 
 
 char ai_turn(map_data* map, char* sName, unsigned short round) {
 	printf("%s making its turn now.\n", sName);
+	test(map, round);
 	return 'A'; //placeholder
 }
 
