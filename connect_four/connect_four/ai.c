@@ -69,6 +69,8 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
                 }
                 if(c == goal) { return get_char_from_int(j); }
 
+                // with theese methods we have a gap filler methos as well 
+
                 // check -- (right)
                 for(int k=j; k < map->y; k++) {
                     zero_counter = 0;
@@ -77,6 +79,13 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
                         for(int l=k; l < k+goal; l++) {
                             if(map->pMap[i][l] != needed_char + '0') { // if the current number is not eq what we would like to see, we have only two options
                                 if(map->pMap[i][l] == 0 + '0') { // if the number is 0, this is good, and we save thats position (but we will let only one from them to exist)
+                                    if(i+1 < map->x) {
+                                        if(map->pMap[i+1][l] == 0 + '0') {
+                                            zero_pos = 0;
+                                            zero_counter = 0;
+                                            break;
+                                        }
+                                    }
                                     zero_pos = l;
                                     zero_counter++;
                                 } else { // or if it is not zero, this means this is already taken for an other user
@@ -104,10 +113,9 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
                 if(i-goal-1 >= 0 && j+goal-1 < map->y) {
                     zero_counter = 0;
                     
-                    for(int k=0; k < goal-1; k++) {
+                    for(int k=0; k < goal; k++) {
                         if(map->pMap[i-k][j+k] != needed_char + '0') {
                             if(map->pMap[i-k][j+k] == 0 + '0') { // if the number is 0, this is good, and we save thats position (but we will let only one from them to exist)
-                                printf("!!!!!!!!!!!!!!!!!!!!!zero found: %d %d\n", i-k, j+k);
                                 if(k > 0) {
                                     if(map->pMap[i-k+1][j+k] == 0 + '0') {
                                         zero_counter = 0;
@@ -121,18 +129,15 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
                                 zero_counter = 0;
                                 break; // with this situation, we dont need to continue the investigating
                             }
-                        } 
-
-                        //printf("\n");
+                        }
                     }
 
                     if(zero_counter == 1) { // we want to see only one zero! and that could be anywhere in the sequence (so this is why we saved that position)
-                        c = goal; // with this method we have a gap filler methos as well 
+                        c = goal;
                     }
                 }
 
                 if(c == goal) {
-                    printf("yetttttttttttttttttttttttttttttttttttt\n");
                     return get_char_from_int(zero_pos);
                 }
 
