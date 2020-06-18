@@ -30,6 +30,18 @@
     <ClInclude Include="turn.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="utest-display.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utest-init.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utest-map_check.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utest-turn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="init.c">
@@ -45,6 +57,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="turn.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utest.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utest-display.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utest-init.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utest-map_check.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utest-turn.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

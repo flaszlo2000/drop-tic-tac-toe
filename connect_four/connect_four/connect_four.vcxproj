@@ -116,10 +116,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>F:\Programok\CUNIT\Headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>F:\Programok\CUNIT\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>cunit.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -144,6 +147,10 @@
     <ClInclude Include="init.h" />
     <ClInclude Include="map_check.h" />
     <ClInclude Include="turn.h" />
+    <ClInclude Include="utest-display.h" />
+    <ClInclude Include="utest-init.h" />
+    <ClInclude Include="utest-map_check.h" />
+    <ClInclude Include="utest-turn.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="display.c" />
@@ -151,6 +158,11 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="map_check.c" />
     <ClCompile Include="turn.c" />
+    <ClCompile Include="utest-display.c" />
+    <ClCompile Include="utest-init.c" />
+    <ClCompile Include="utest-map_check.c" />
+    <ClCompile Include="utest-turn.c" />
+    <ClCompile Include="utest.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
