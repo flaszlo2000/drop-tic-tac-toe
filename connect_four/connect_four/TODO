@@ -1,0 +1,10 @@
+valahogy el kellene menteni a pontokat, de ehhez minimum inicializálni kellene a
+get_user_point_count -ot egy wrapper -el.
+
+wrapper call:
+    int len = get_user_point_count(current_user_id, NULL) 
+    // here the NULL for the header
+
+    point * user_tokens = malloc(sizeof(point) * len)
+
+    get_user_point_count(user_tokens)
