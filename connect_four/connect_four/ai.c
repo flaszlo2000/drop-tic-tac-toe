@@ -74,24 +74,24 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
                 for(int k=j; k < map->y; k++) {
                     zero_counter = 0;
 
-                    if(k+goal-1 < map->y) {
+                    if(k+goal-1 < map->y) {  // we take goal amount of elements, atm we know nothing about theese numbers
                         for(int l=k; l < k+goal; l++) {
-                            if(map->pMap[i][l] != needed_char + '0') {
-                                if(map->pMap[i][l] == 0 + '0') {
+                            if(map->pMap[i][l] != needed_char + '0') { // if the current number is not eq what we would like to see, we have only two options
+                                if(map->pMap[i][l] == 0 + '0') { // if the number is 0, this is good, and we save thats position (but we will let only one from them to exist)
                                     zero_pos = l;
                                     zero_counter++;
-                                } else {
+                                } else { // or if it is not zero, this means this is already taken for an other user
                                     zero_counter = 0;
-                                    break;
+                                    break; // with this situation, we dont need to continue the investigating
                                 }
                             }
                         }
 
-                        if(zero_counter == 1) {
+                        if(zero_counter == 1) { // we want to see only one zero! and that could be anywhere in the sequence (so this is why we saved that position)
                             c = goal;
                             break;
                         }
-                    } else {
+                    } else { // what if we dont have enough place for the invesigation
                         break;
                     }
                 }
@@ -100,6 +100,8 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
                     return get_char_from_int(zero_pos);
                 }
 
+                c = 1;
+                // check /
 
                 
             }
