@@ -48,15 +48,23 @@ bool empty_pos(map_data * map, int x, int y) {
     return result;
 }
 
-char ai_main(map_data * map, unsigned short round) {
+char ai_main(map_data * map, unsigned short round, unsigned char goal) {
     char result;
+    
+    printf("from ai > goal: %hhu\n", goal);
 
     unsigned short user_id = round % 2;
     int current_point_count = get_user_point_count(map, user_id+1);
     
     if(current_point_count > 0) {
         // atm both has at least a point on the map
-        result = get_char_from_int(random_move(map->x)); // TODO
+
+        // check for win positions
+
+        // check for win positions for the enemy
+
+        result = get_char_from_int(random_move(map->x));
+
     } else {
         int random_start_pos;
         

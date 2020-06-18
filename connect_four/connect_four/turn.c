@@ -14,9 +14,9 @@
 
 
 
-char ai_turn(map_data* map, char* sName, unsigned short round) {
+char ai_turn(map_data* map, char* sName, unsigned short round, unsigned char goal) {
 	printf("%s making its turn now.\n", sName);
-	char result = ai_main(map, round);
+	char result = ai_main(map, round, goal);
 
 	printf("ai decision: %c\n", result);
 	return result;
@@ -24,7 +24,7 @@ char ai_turn(map_data* map, char* sName, unsigned short round) {
 
 
 
-char player_turn(map_data* map, char* sName, unsigned short round) {
+char player_turn(map_data* map, char* sName, unsigned short round, unsigned char goal) { // atm goal args is unused bc the givel data structure is not compatible
 	char step;
 
 	printf("%s, make your move: ", sName);
@@ -42,9 +42,11 @@ char player_turn(map_data* map, char* sName, unsigned short round) {
 char step_input(game_data* data, unsigned short round) {
 	printf("This is the %hu. turn.\n", round);
 
-	if (round % 2)
-		return data->pP1->fTurn(&data->map, data->pP1->sName, round);
-	return data->pP2->fTurn(&data->map, data->pP2->sName, round);
+	if(round % 2) {
+		return data->pP1->fTurn(&data->map, data->pP1->sName, round, data->lLength);
+	} else {
+		return data->pP2->fTurn(&data->map, data->pP2->sName, round, data->lLength);
+	}
 }
 
 

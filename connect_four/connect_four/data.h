@@ -1,6 +1,7 @@
 /**
-	@author Levente L�ffler
-	@version 1.2.2 6/17/2020
+	@author Levente L�ffler
+	@author Fazekas László
+	@version 1.2.3 6/18/2020
 
 	This header declares the necessary data structures used by other modules.
 */
@@ -20,7 +21,7 @@ typedef struct map_data
 typedef struct player_data
 {
 	char* sName;
-	char (*fTurn)(map_data*, char*, unsigned short);
+	char (*fTurn)(map_data*, char*, unsigned short, unsigned char);
 	unsigned char cWins;
 } player_data;
 
