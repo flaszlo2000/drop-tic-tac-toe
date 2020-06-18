@@ -18,7 +18,6 @@
 #include "CUnit.h"  // #include <CUnit/CUnit.h>
 
 CU_SuiteInfo tic_tac_toe_tests[] = {
-    { "display", NULL, NULL, NULL, NULL, display_tests },
     { "turn", NULL, NULL, NULL, NULL, turn_tests },
     { "init", NULL, NULL, NULL, NULL, init_tests },
     { "map_check", NULL, NULL, NULL, NULL, map_check_tests },
