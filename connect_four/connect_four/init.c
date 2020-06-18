@@ -57,6 +57,9 @@ void init(game_data* data)
 			char buffer[21];
 			while(fgets(buffer, 21, stdin)[0] == '\n');
 
+			if (!strchr(buffer, '\n'))
+				for (char tmp = getchar(); tmp != EOF && tmp != '\n'; tmp = getchar());
+
 			strcpy(buffer, strtok(buffer, "\n"));
 
 			unsigned char len = 0;
@@ -79,6 +82,9 @@ void init(game_data* data)
 
 			while(fgets(buffer, 21, stdin)[0] == '\n');
 
+			if (!strchr(buffer, '\n'))
+				for (char tmp = getchar(); tmp != EOF && tmp != '\n'; tmp = getchar());
+
 			strcpy(buffer, strtok(buffer, "\n"));
 
 			len = 0;
@@ -92,6 +98,10 @@ void init(game_data* data)
 			while (1)
 			{
 				while (fgets(buffer, 21, stdin)[0] == '\n');
+
+				if (!strchr(buffer, '\n'))
+					for (char tmp = getchar(); tmp != EOF && tmp != '\n'; tmp = getchar());
+
 				strcpy(buffer, strtok(buffer, "\n"));
 
 				if (strcmp(buffer, pTempPlayer1->sName))
