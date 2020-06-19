@@ -11,6 +11,9 @@ ldlibs:=-ldisplay -linit -lmap_check -lturn $(LDLIBS)
 
 all: $(bin)
 
+test:
+	echo "There are no unit tests for the main program."
+
 $(bin): $(obj)
 	$(CC) $(CFLAGS) $(ldflags) $^ $(ldlibs) -o $@
 	
