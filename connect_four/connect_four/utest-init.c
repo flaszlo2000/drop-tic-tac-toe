@@ -16,7 +16,9 @@ map_data initMap(unsigned char x, unsigned char y, unsigned char value) {
     return mData;
 }
 
-static void test_init() {}
+static void test_init() {
+ 
+}
 
 static void test_reset() {
     map_data data = initMap('5', '5', '2');
@@ -26,7 +28,18 @@ static void test_reset() {
             CU_ASSERT_EQUAL(data.pMap[i][j], '0');
 }
 
-static void test_uninit() {}
+static void test_uninit() {
+    game_data game;
+   
+    init(&game);
+
+    uninit(&game);
+
+    CU_ASSERT_PTR_NULL(game.pP1->sName);
+    CU_ASSERT_PTR_NULL(game.pP2->sName);
+    CU_ASSERT_PTR_NULL(game.pP1);
+    CU_ASSERT_PTR_NULL(game.pP2);
+}
 
 
 CU_TestInfo init_tests[] = {
