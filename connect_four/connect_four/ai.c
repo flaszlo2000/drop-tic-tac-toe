@@ -81,39 +81,37 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
             // with theese methods we have a gap filler methos as well 
 
             // check -- (right)
-            for(int k=j; k < map->y; k++) {
+            if(j+goal-1 < map->y) {
                 zero_counter = 0;
 
-                if(k+goal-1 < map->y) {  // we take goal amount of elements, atm we know nothing about theese numbers
-                    for(int l=k; l < k+goal; l++) {
-                        if(map->pMap[i][l] != needed_char + '0') { // if the current number is not eq what we would like to see, we have only two options
-                            if(map->pMap[i][l] == 0 + '0') { // if the number is 0, this is good, and we save thats position (but we will let only one from them to exist)
-                                if(i+1 < map->x) {
-                                    if(map->pMap[i+1][l] == 0 + '0') {
-                                        zero_pos = 0;
-                                        zero_counter = 0;
-                                        break;
-                                    }
+                for(int k=0; k < goal; k++) {
+                    if(map->pMap[i][j+k] != needed_char + '0') {
+                        if(map->pMap[i][j+k] == 0 + '0') {
+                            if(i+1 < map->x) {
+                                if(map->pMap[i+1][j+k] != 0 + '0') {
+                                    zero_pos = j + k;
+                                    zero_counter++;
+                                } else {
+                                    zero_counter = 0;
+                                    break;
                                 }
-                                zero_pos = l;
+                            } else {
+                                zero_pos = j+k;
                                 zero_counter++;
-                            } else { // or if it is not zero, this means this is already taken for an other user
-                                zero_counter = 0;
-                                break; // with this situation, we dont need to continue the investigating
                             }
+                        } else {
+                            zero_counter = 0;
+                            break;
                         }
                     }
+                }
 
-                    if(zero_counter == 1) { // we want to see only one zero! and that could be anywhere in the sequence (so this is why we saved that position)
-                        c = goal;
-                        break;
-                    }
-                } else { // what if we dont have enough place for the invesigation (we could optimalize this)
-                    break;
+                if(zero_counter == 1) {
+                    c = goal;
                 }
             }
-
             if(c == goal) {
+                printf("yeeeeeeeeeeeeeeeeeeeeeeeet");
                 return get_char_from_int(zero_pos);
             }
 
