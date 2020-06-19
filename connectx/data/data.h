@@ -20,7 +20,7 @@ typedef struct map_data
 typedef struct player_data
 {
 	char* sName;
-	char (*fTurn)(map_data*, char*, unsigned short);
+	char (*fTurn)(map_data*, char*, unsigned short, unsigned char goal);
 	unsigned char cWins;
 } player_data;
 
