@@ -31,7 +31,6 @@ int get_user_point_count(map_data * map, unsigned short needed_number) {
 
 int random_move(int to) {
     int result = (rand() % to );
-    printf("%d asdasdasdasd!!!!!!!!!!!!!!!!!!!!!4\n", result);
     return result;
 }
 
@@ -44,7 +43,6 @@ bool empty_pos(map_data * map, int x, int y) {
 }
 
 char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal) {
-    printf("given id: %d\n", needed_char);
     int c = 0; // this will contain the symbol count in a line (only for |)
     int zero_counter = 0; // this will count the amount of zeros in a sequence
     int zero_pos = 0; // this will contant the place where the zero is
@@ -111,7 +109,6 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
                 }
             }
             if(c == goal) {
-                printf("yeeeeeeeeeeeeeeeeeeeeeeeet");
                 return get_char_from_int(zero_pos);
             }
 
@@ -151,7 +148,7 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
             
             zero_pos = 0;
             // check \e
-            if(i-goal+1 >= 0 && j-goal-1 >= 0) {
+            if(i-goal+1 >= 0 && j-goal+1 >= 0) {
                 for(int k=0; k < goal; k++) {
                     if(map->pMap[i-k][j-k] != needed_char + '0') {
                         if(map->pMap[i-k][j-k] == 0 + '0') { // if the number is 0, this is good, and we save thats position (but we will let only one from them to exist)
@@ -163,6 +160,9 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
                                     zero_pos = j-k;
                                     zero_counter++;
                                 }
+                            } else {
+                                zero_pos = j-k;
+                                zero_counter++;
                             }
                         } else { // or if it is not zero, this means this is already taken for an other user
                             zero_counter = 0;
@@ -191,8 +191,6 @@ char ai_main(map_data * map, unsigned short round, unsigned char goal) {
     int random_start_pos;
 
     int loop_c = 0;
-
-    printf("from ai > goal: %hhu\n", goal);
 
     unsigned short user_id = (round + 1) % 2;
     int current_point_count = get_user_point_count(map, user_id+1);
