@@ -73,15 +73,15 @@ int main()
 
 		for (unsigned char c = 1; game.pP1->cWins < game.nWins && game.pP2->cWins < game.nWins; c++)
 		{
-			game_loop(&game, c);
-
-			if (game.nWins > 1)
+			if (c > 1)
 			{
+				reset(&game.map);
 				player_data* tmp = game.pP1;
 				game.pP1 = game.pP2;
 				game.pP2 = tmp;
-				reset(&game.map);
-			}	
+			}
+				
+			game_loop(&game, c);
 		}
 		
 		printf("\n");
