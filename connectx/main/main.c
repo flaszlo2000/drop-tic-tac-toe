@@ -6,7 +6,6 @@
 	Main function and game loop.
 */
 
-#define _CRT_SECURE_NO_WARNINGS
 #include "init.h"
 #include "display.h"
 #include "map_check.h"

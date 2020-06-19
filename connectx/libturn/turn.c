@@ -6,7 +6,6 @@
 	Implementation of the turn module.
 */
 
-#define _CRT_SECURE_NO_WARNINGS
 #include "turn.h"
 #include <stdio.h>
 #include <stdlib.h>

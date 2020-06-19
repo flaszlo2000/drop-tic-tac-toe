@@ -5,7 +5,6 @@
 	Implementation of the init module.
 */
 
-#define _CRT_SECURE_NO_WARNINGS //this is for msvc
 #include "init.h"
 #include "turn.h"
 #include <stdio.h>
