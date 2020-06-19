@@ -205,7 +205,7 @@ char ai_main(map_data * map, unsigned short round, unsigned char goal) {
 
             // check for win positions
             char win_option = get_winning_opportunity(map, user_id+1, goal);
-            printf("win option: %c\n", win_option);
+            //printf("win option: %c\n", win_option);
 
             if(win_option != '0') {
                 return win_option;
@@ -213,13 +213,13 @@ char ai_main(map_data * map, unsigned short round, unsigned char goal) {
 
             // check for win positions for the enemy
             win_option = get_winning_opportunity(map, 1-user_id+1, goal);
-            printf("kill streak option: %c\n", win_option);
+            //printf("kill streak option: %c\n", win_option);
 
             if(win_option != '0') {
                 return win_option;
             }
 
-            // if there is no win position nether for the ai and the user, than make a point what has benefits for the ai
+            // if there is no win position neither for the ai and the user, than make a point what has benefits for the ai
             // follow its longest line or if that is not completeable then start a new random point
 
             random_start_pos = random_move(map->y); // here this is not start pos
