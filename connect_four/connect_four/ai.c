@@ -68,63 +68,27 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
                     }
                 }
                 if(c == goal) { return get_char_from_int(j); }
+            }
 
-                // with theese methods we have a gap filler methos as well 
+            // with theese methods we have a gap filler methos as well 
 
-                // check -- (right)
-                for(int k=j; k < map->y; k++) {
-                    zero_counter = 0;
+            // check -- (right)
+            for(int k=j; k < map->y; k++) {
+                zero_counter = 0;
 
-                    if(k+goal-1 < map->y) {  // we take goal amount of elements, atm we know nothing about theese numbers
-                        for(int l=k; l < k+goal; l++) {
-                            if(map->pMap[i][l] != needed_char + '0') { // if the current number is not eq what we would like to see, we have only two options
-                                if(map->pMap[i][l] == 0 + '0') { // if the number is 0, this is good, and we save thats position (but we will let only one from them to exist)
-                                    if(i+1 < map->x) {
-                                        if(map->pMap[i+1][l] == 0 + '0') {
-                                            zero_pos = 0;
-                                            zero_counter = 0;
-                                            break;
-                                        }
-                                    }
-                                    zero_pos = l;
-                                    zero_counter++;
-                                } else { // or if it is not zero, this means this is already taken for an other user
-                                    zero_counter = 0;
-                                    break; // with this situation, we dont need to continue the investigating
-                                }
-                            }
-                        }
-
-                        if(zero_counter == 1) { // we want to see only one zero! and that could be anywhere in the sequence (so this is why we saved that position)
-                            c = goal;
-                            break;
-                        }
-                    } else { // what if we dont have enough place for the invesigation (we could optimalize this)
-                        break;
-                    }
-                }
-
-                if(c == goal) {
-                    return get_char_from_int(zero_pos);
-                }
-
-                zero_pos = 0;
-                // check / (up-right)
-                if(i-goal-1 >= 0 && j+goal-1 < map->y) {
-                    zero_counter = 0;
-                    
-                    for(int k=0; k < goal; k++) {
-                        if(map->pMap[i-k][j+k] != needed_char + '0') {
-                            if(map->pMap[i-k][j+k] == 0 + '0') { // if the number is 0, this is good, and we save thats position (but we will let only one from them to exist)
-                                if(k > 0) {
-                                    if(map->pMap[i-k+1][j+k] == 0 + '0') {
+                if(k+goal-1 < map->y) {  // we take goal amount of elements, atm we know nothing about theese numbers
+                    for(int l=k; l < k+goal; l++) {
+                        if(map->pMap[i][l] != needed_char + '0') { // if the current number is not eq what we would like to see, we have only two options
+                            if(map->pMap[i][l] == 0 + '0') { // if the number is 0, this is good, and we save thats position (but we will let only one from them to exist)
+                                if(i+1 < map->x) {
+                                    if(map->pMap[i+1][l] == 0 + '0') {
+                                        zero_pos = 0;
                                         zero_counter = 0;
                                         break;
-                                    } else { // if there is not void underneath the chosen number
-                                        zero_pos = j+k;
-                                        zero_counter++;
                                     }
                                 }
+                                zero_pos = l;
+                                zero_counter++;
                             } else { // or if it is not zero, this means this is already taken for an other user
                                 zero_counter = 0;
                                 break; // with this situation, we dont need to continue the investigating
@@ -134,15 +98,52 @@ char get_winning_opportunity(map_data * map, int needed_char, unsigned char goal
 
                     if(zero_counter == 1) { // we want to see only one zero! and that could be anywhere in the sequence (so this is why we saved that position)
                         c = goal;
+                        break;
+                    }
+                } else { // what if we dont have enough place for the invesigation (we could optimalize this)
+                    break;
+                }
+            }
+
+            if(c == goal) {
+                return get_char_from_int(zero_pos);
+            }
+
+            zero_pos = 0;
+            // check / (up-right)
+            if(i-goal-1 >= 0 && j+goal-1 < map->y) {
+                zero_counter = 0;
+                
+                for(int k=0; k < goal; k++) {
+                    if(map->pMap[i-k][j+k] != needed_char + '0') {
+                        if(map->pMap[i-k][j+k] == 0 + '0') { // if the number is 0, this is good, and we save thats position (but we will let only one from them to exist)
+                            if(k > 0) {
+                                if(map->pMap[i-k+1][j+k] == 0 + '0') {
+                                    zero_counter = 0;
+                                    break;
+                                } else { // if there is not void underneath the chosen number
+                                    zero_pos = j+k;
+                                    zero_counter++;
+                                }
+                            }
+                        } else { // or if it is not zero, this means this is already taken for an other user
+                            zero_counter = 0;
+                            break; // with this situation, we dont need to continue the investigating
+                        }
                     }
                 }
 
-                if(c == goal) {
-                    return get_char_from_int(zero_pos);
+                if(zero_counter == 1) { // we want to see only one zero! and that could be anywhere in the sequence (so this is why we saved that position)
+                    c = goal;
                 }
+            }
+
+            if(c == goal) {
+                return get_char_from_int(zero_pos);
+            }
 
                 
-            }
+
         }
     }
 
@@ -169,6 +170,12 @@ char ai_main(map_data * map, unsigned short round, unsigned char goal) {
         }
 
         // check for win positions for the enemy
+        win_option = get_winning_opportunity(map, 1-user_id+1, goal);
+        printf("kill streak option: %c\n", win_option);
+
+        if(win_option != '0') {
+            return win_option;
+        }
 
         // if there is no win position nether for the ai and the user, than make a point what has benefits for the ai
         // follow its longest line or if that is not completeable then start a new random point
